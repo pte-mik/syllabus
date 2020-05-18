@@ -1,0 +1,6 @@
+api:
+  path: /api/
+  namespace: Application\Mission\Web\Api
+  extract:
+    - file ~root: /@src/mission.web/js/constants/end-points.js
+      as: Endpoints

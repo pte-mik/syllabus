@@ -1,0 +1,8 @@
+ghost:
+  path ~: path.data + "attachment/"
+  meta-db-path ~: path.data + "attachment-meta/"
+  url: /~fs
+  thumbnail:
+    path ~: path.var + "thumbnail/"
+    secret: ferengi
+    url: /~thumbnail

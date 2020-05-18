@@ -1,0 +1,22 @@
+<div class="modalify">
+	<header>
+		<i (icon) class="inverse fal"></i>
+		<label (title)></label>
+		<nav>
+			<button (close)><i class="fal fa-times"></i></button>
+		</nav>
+	</header><section (dropzone) class="dropzone">
+	<ul>
+		{% for attachment in attachments %}
+			<li>
+				<i class="fal fa-link" (link) data-url="{{ attachment.url }}"></i>
+				{{ attachment.file }}
+				<i class="fal fa-trash-alt" (delete) data-file="{{ attachment.file }}"></i>
+			</li>
+		{% endfor %}
+	</ul>
+</section>
+
+
+
+</div>

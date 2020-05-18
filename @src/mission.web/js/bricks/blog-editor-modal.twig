@@ -1,0 +1,22 @@
+<div (modal) class="modalify list">
+
+	<header>
+		<i class="inverse fal fa-file-alt"></i>
+		<label>Blogposts</label>
+		<nav>
+			<button class="show-in-editor" (back)><i class="fal fa-chevron-left"></i></button>
+			<button class="show-in-editor" (lead-image)><i class="fas fa-image"></i></button>
+			<button class="show-in-editor" (gallery)><i class="fal fa-images"></i></button>
+			<button class="show-in-editor" (files)><i class="fal fa-folder"></i></button>
+			<button class="show-in-editor" (save)><i class="fal fa-save"></i></button>
+			<button class="show-in-list" (add)><i class="fal fa-file-plus"></i></button>
+			<button class="show-in-list" (close)><i class="fal fa-times"></i></button>
+		</nav>
+	</header>
+
+	<section>
+		<div is="blog-editor-list" class="show-in-list" (list)></div>
+		<div is="blog-editor-page" class="show-in-editor" (editor)></div>
+	</section>
+
+</div>

@@ -1,0 +1,3 @@
+pattern ~: sys.domain
+mission: reroute-mission
+config.reroute ~: ("www." + sys.domain)

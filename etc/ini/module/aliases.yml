@@ -1,0 +1,27 @@
+# - startup modules
+debug: Application\Module\Debug
+alert: Application\Module\Alert
+
+# - module.aliases
+auth: Andesite\Zuul\Auth\Auth
+codex: Andesite\Codex
+ghosts: Andesite\Ghost\GhostManager
+db: Andesite\DBAccess\ConnectionFactory
+role-manager: Andesite\Zuul\RoleManager\RoleManager
+twig-responder: Andesite\TwigResponder\TwigResponder
+attachment-repository: Andesite\Attachment\AttachmentRepository
+reroute-mission: Andesite\Mission\Reroute\RerouteMission
+
+# - cli
+cron: Andesite\CliCommand\Cron
+dump-db: Andesite\CliCommand\DumpDB
+show-env: Andesite\CliCommand\ShowEnv
+ghost: Andesite\CliCommand\Ghost
+generate-codex-helper: Andesite\CliCommand\GenerateCodexHelper
+update-groups: Andesite\CliCommand\UpdateGroups
+generate-constants: Andesite\CliCommand\GenerateConstants
+extract-api: Andesite\CliCommand\ExtractApi
+generate-config: Andesite\CliCommand\GenerateConfig
+generate-public-index: Andesite\CliCommand\GeneratePublicIndex
+mik-auth: Application\Module\MikAuth\MikAuth
+slave: Andesite\CliCommand\Slave

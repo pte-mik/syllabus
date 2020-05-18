@@ -1,0 +1,22 @@
+{% extends('layout.twig') %}
+
+{% block main %}
+	<div class="blog">
+		{% for post in blogposts %}
+			{% set hasImage = post.leadImage.first ? true : false %}
+			<a href="/blog-post/{{ post.id }}" {{ (hasImage ? "class=\"has-image\" style=\"background-image:url('"~post.leadImage.first.thumbnail.crop(355,250).jpg~"')\""  : '') | raw }}>
+				<header>{{ post.title }}</header>
+				<p>{{ post.lead }}</p>
+			</a>
+		{% endfor %}
+	</div>
+	{% if pagecount > 1 %}
+		<div class="pager">
+			<a href="/blog"><i class="fas fa-chevron-left"></i></a>
+			{% for i in pages %}
+				<a href="/blog/{{ i }}" {% if page == i %}class="active"{% endif %}>{{ i }}</a>
+			{% endfor %}
+			<a href="/blog/{{ pagecount }}"><i class="fas fa-chevron-right"></i></a>
+		</div>
+	{% endif %}
+{% endblock %}

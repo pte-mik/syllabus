@@ -1,0 +1,23 @@
+[is=modal--blog-editor] {
+
+	> div {
+		max-width: initial !important;
+		transition: all .3s;
+
+		.show-in-editor, .show-in-list { display: none!important;}
+
+		&.list{
+			.show-in-list { display: block!important;}
+			width: 600px;
+			height: calc(70vh);
+		}
+
+		&.editor{
+			.show-in-editor { display: block!important;}
+			width: calc(100vw - 60px);
+			height: calc(100vh - 60px);
+		}
+	}
+
+
+}

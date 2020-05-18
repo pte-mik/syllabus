@@ -1,0 +1,14 @@
+import {Brick} from "zengular";
+import twig    from "./{{ name }}.twig";
+import "./{{ name }}.scss";
+
+@Brick.register('{{ tag }}', twig)
+export default class extends Brick {
+
+	onInitialize() {}
+
+	createViewModel() {}
+
+	onRender() {}
+
+}

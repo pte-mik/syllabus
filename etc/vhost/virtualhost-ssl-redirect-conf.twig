@@ -1,0 +1,26 @@
+<VirtualHost *:80>
+
+	ServerName "{{ domain }}"
+	ServerAlias "*.{{ domain }}
+
+	Alias /.well-known/acme-challenge {{ ssl.challange }}
+
+	<Directory {{ ssl.challange }}>
+		Options None
+		AllowOverride None
+		<IfModule !mod_authz_core.c>
+			Order allow,deny
+			Allow from all
+		</IfModule>
+
+		<IfModule mod_authz_core.c>
+			Require all granted
+		</IfModule>
+	</Directory>
+
+	RewriteEngine On
+	RewriteCond %{HTTPS} off
+	RewriteCond %{REQUEST_URI} !^\/\.well-known\/.*$
+	RewriteRule (.*) https://%{SERVER_NAME}$1 [R,L]
+
+</VirtualHost>

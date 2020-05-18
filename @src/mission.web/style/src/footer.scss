@@ -1,0 +1,26 @@
+> footer {
+	padding: 0 30px;
+	margin: 0;
+	color:white;
+	font-size:13px;
+	img.logo{
+		margin-top:17px;
+		height:26px;
+		padding-right: 5px;
+		border-right: 1px solid white;
+		float:left;
+	}
+	div.pte, div.impressum{
+		margin-top:15px;
+		height:26px;
+		margin-left:10px;
+	}
+	div.pte{
+		float:left;
+		font-weight: bold;
+	}
+	div.impressum{
+		float:right;
+		text-align: right;
+	}
+}

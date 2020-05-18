@@ -1,0 +1,12 @@
+{
+	"andesite": {
+		"src": "vendor/andesite",
+		"pattern": "*",
+		"dest": "/work/package-composer/andesite"
+	},
+	"zengular": {
+		"src": "node_modules",
+		"pattern": "zengular*",
+		"dest": "/work/package-npm"
+	}
+}

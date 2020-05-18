@@ -1,0 +1,85 @@
+{% extends('@smartpage/smartpage.twig') %}
+
+{% block head %}
+	<style>
+		:root {
+			--menu-bg-color: {{ site.menuBgColor }};
+			--menu-color: {{ site.menuColor }};
+			--menu-secondary-color: {{ site.menuSecondaryColor }};
+			--title-color: {{ site.titleColor }};
+			--footer-bg-color: {{ site.footerBgColor }};
+		}
+	</style>
+	{{ parent() }}
+{% endblock %}
+
+{% block content %}
+	<div class="grid-container">
+		<div class="menuBgColor"></div>
+		<header style="grid-column: 2 / span 2; background-image:url({{ site.headImage.first.url ?: '/~web/img/mik.jpg' }})">
+			<div class="admin" is="admin"
+			     data-authenticated="{{ access.isAuthenticated }}"
+			     data-editor="{{ access.isEditor }}"
+			     data-owner="{{ access.isOwner }}"
+			></div>
+			<div class="title-bar">
+				<img src="/~web/img/mik-logo.svg" class="logo">
+				<div class="url"><span style="color:{{ "#" ~ site.titleColor }}">{{ site.slug }}</span>.wiki.mik.pte.hu
+				</div>
+				<div class="title">{{ site.title }}</div>
+			</div>
+		</header>
+		<div></div>
+		<div class="menuBgColor"></div>
+		<nav class="menuBgColor" is="nav">
+			menu:
+			{{ _self.tree(menu) }}
+		</nav>
+		<main>
+			{% block main %}{% endblock %}
+		</main>
+		<div></div>
+		<div class="footerBgColor"></div>
+		<footer class="footerBgColor" style="grid-column: 2 / span 2;">
+			<img src="/~web/img/mik-logo.svg" class="logo">
+			<div class="pte">
+				PÉCSI TUDOMÁNYEGYETEM<br>
+				Műszaki és Informatikai Kar
+			</div>
+			<div class="impressum">
+				{{site.footerText}}<br>
+				{{site.footerContact}}
+			</div>
+		</footer>
+		<div></div>
+	</div>
+	<div is="z-notification"></div>
+	<div is="z-overlay"></div>
+{% endblock %}
+
+
+{% macro tree(menu) %}
+	<ul>
+		{% for item in menu %}
+			{% set type = item.type %}
+			{% if (type == 'link' or type == 'page') and item.properties.link == "" %}
+				{% set type='emtpy' %}
+			{% endif %}
+
+			<li class="{{ type }}">
+				{% if type == 'menu' %}
+					<span (folder)> {{ item.properties.label }}</span>
+					{% set children = item.subitems %}
+					{% if children|length > 0 %}{{ _self.tree(children) }}{% endif %}
+				{% elseif type == 'link' %}
+					<a href="{{ item.properties.link }}">{{ item.properties.label }}</a>
+				{% elseif type == 'page' %}
+					<a href="/wiki/{{ item.properties.link }}">{{ item.properties.label }}</a>
+				{% elseif type == 'empty' %}
+					{{ item.properties.label }}
+				{% elseif type == 'separator' %}
+				{% endif %}
+			</li>
+		{% endfor %}
+	</ul>
+{% endmacro %}

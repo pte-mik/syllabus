@@ -1,0 +1,48 @@
+{% extends('@smartpage/smartpage.twig') %}
+{% block content %}
+<div is="menu-editor">
+{"items":
+	[
+		{
+			"type": "menu",
+			"properties":{
+				"label": "Információk"
+			},
+			"subitems": [
+				{
+					"type": "link",
+					"properties":{
+						"label": "Hírek",
+						"link": "/blog"
+					}
+				},
+				{
+					"type": "separator"
+				},
+				{
+					"type": "link",
+					"properties":{
+						"label": "Hírek",
+						"link": "/blog"
+					}
+				}
+			]
+		},
+		{
+			"type": "page",
+			"properties":{
+				"label": "About",
+				"link": "about"
+			}
+		},
+		{
+			"type": "menu",
+			"properties":{
+				"label": "Információk"
+			},
+			"subitems": []
+		}
+	]
+}
+</div>
+{% endblock %}

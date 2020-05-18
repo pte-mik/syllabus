@@ -1,0 +1,62 @@
+[is=menu-editor-item] {
+	&:not([brick-initialized="yes"]) {display: none;}
+	* {
+		outline: none;
+	}
+	font-size:11px;
+	.subitems {
+		margin-left: 20px;
+	}
+
+	.dropzone {
+		height: 1px;
+		background-color: rgba(0, 174, 255, 0.1);
+		border: 2px solid white;
+		&.over {
+			background-color: #00aeff;
+			border-color: #00aeff;
+		}
+	}
+	//div + .dropzone.onlyifempty {display: none;}
+
+	input {
+		background-color: white;
+		border: 0;
+		&::placeholder {
+			color: #ccc;
+		}
+		color: rgba(0, 174, 255, 1);
+		font-size:11px;
+	}
+
+
+	.menuitem {
+		line-height: 20px;
+		padding: 2px;
+		background-color: white;
+		border: 1px solid white;
+		font-size:12px;
+		font-family: arial;
+
+		&:hover {
+			border: 1px solid #eee;
+			i.operation {display: inline;}
+		}
+		i {
+			line-height: 20px;
+			font-size: 12px;
+			width: 20px;
+			color: rgba(0, 174, 255, 1);
+		}
+		i.icon {
+			margin-left: 4px;
+			cursor: grab;
+		}
+
+		i.operation {
+			float: right;
+			display: none;
+			cursor: pointer;
+		}
+	}
+}

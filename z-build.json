@@ -1,0 +1,13 @@
+{
+	"copy": {
+		"assets/**": "public",
+		"node_modules/@fortawesome/fontawesome-pro/webfonts/*": "assets/~fonts/fontawesome/"
+	},
+	"entries": {
+		"@src/mission.web/js/app.js": "public/~web/app",
+		"@src/mission.admin/js/app.js": "public/~admin/app",
+		"@src/mission.admin/js/login.js": "public/~admin/login"
+	},
+	"verbump": "build-number",
+	"devtool": false
+}

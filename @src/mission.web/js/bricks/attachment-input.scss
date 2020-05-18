@@ -1,0 +1,26 @@
+[is=attachment-input] {
+
+	line-height: 20px;
+	padding:0;
+
+	.dropzone.empty:before{
+		content: "drop file here!";
+	}
+
+	.dropzone{
+		height:20px;
+		padding:2px 5px;
+	}
+
+	.dropzone.dragover {
+		background-color: #abe5ff;
+	}
+
+	i{float:right;
+		line-height: 20px;
+		font-size:12px;
+		border-left:1px solid #ddd;
+		width: 24px;
+		text-align: center;
+	}
+}

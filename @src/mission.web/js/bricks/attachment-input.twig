@@ -1,0 +1,6 @@
+<div class="dropzone {{ attachment ? '' : 'empty' }}" (dropzone)>
+{{ attachment.file }}
+{% if attachment %}
+	<i class="fal fa-trash-alt" (delete) data-file="{{ attachment.file }}"></i>
+{% endif %}
+</div>

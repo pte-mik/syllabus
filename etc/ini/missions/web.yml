@@ -1,0 +1,5 @@
+pattern~: ("*." + sys.domain)
+mission: \Application\Mission\Web\Mission
+modules:
+  auth:
+  twig-responder.twig-main ~root: "@src/mission.web/template"

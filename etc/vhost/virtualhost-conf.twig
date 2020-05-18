@@ -1,0 +1,71 @@
+<VirtualHost *:{{ ssl ? 443 : 80 }}>
+
+	ServerName "{{ domain }}"
+	ServerAlias "*.{{ domain }}
+
+	DirectoryIndex "index.php"
+	DocumentRoot "{{ path.public }}"
+	ErrorLog "{{ path.errorlog }}"
+
+	{% for name, attachment in attachments %}
+
+	Alias "{{ attachment.thumbnail.url }}" "{{ attachment.thumbnail.path }}"
+	<Directory "{{ attachment.thumbnail.path }}" >
+		Require all granted
+		AllowOverride all
+		RewriteEngine On
+		RewriteCond %{REQUEST_FILENAME} !-f
+		RewriteRule . /index.php [L]
+	</Directory>
+
+	Alias "{{ attachment.url }}" "{{ attachment.path }}"
+	<Directory "{{ attachment.path }}" >
+		Require all granted
+		AllowOverride all
+	</Directory>
+
+	{% endfor %}
+
+	<Directory "{{ path.public }}">
+		Require all granted
+		AllowOverride all
+		Options -Indexes
+		Options +FollowSymlinks
+
+		{% if not fpm %}{% for config in php %}
+
+		php_{{ config.type }} {{ config.key }} {{ config.value }}
+		{% endfor %}{% endif %}
+
+		RewriteEngine On
+
+		RewriteCond %{REQUEST_FILENAME} !-d
+		RewriteRule ^(.*)/$ /$1 [L,R]
+
+		RewriteCond %{REQUEST_URI} !(^/~.+)
+		RewriteCond %{REQUEST_FILENAME} !-f
+		RewriteRule . /index.php [L]
+	</Directory>
+
+	{% if fpm %}
+
+	<FilesMatch \.php$>
+		SetHandler "{{ fpm.handler }}"
+	</FilesMatch>
+
+	{% endif %}
+
+	{% if ssl %}
+
+	SSLEngine On
+	SSLHonorCipherOrder On
+	SSLProtocol all -SSLv2 -SSLv3
+	SSLCipherSuite ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305:ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-SHA384:ECDHE-RSA-AES256-SHA384:ECDHE-ECDSA-AES128-SHA256:ECDHE-RSA-AES128-SHA256
+	SSLCertificateKeyFile {{ ssl["dehydrated-path"] }}{{ sys.domain }}/privkey.pem
+	SSLCertificateFile {{ ssl["dehydrated-path"] }}{{ sys.domain }}/cert.pem
+	SSLCACertificateFile {{ ssl["dehydrated-path"] }}{{ sys.domain }}/chain.pem
+
+	{% endif %}
+
+</VirtualHost>
+

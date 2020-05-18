@@ -1,0 +1,6 @@
+pattern~: ("admin." + sys.domain)
+mission: Application\AdminCodex\Mission
+config:
+modules:
+  auth:
+  twig-responder:

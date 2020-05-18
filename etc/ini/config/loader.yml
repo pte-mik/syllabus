@@ -1,0 +1,9 @@
+# - loader
+
+/path @: config/path
+/sys.missions @: missions/*
+/sys.startup @: ~module/startup-modules
+/sys.modules @: ~module/base-modules
+/sys.module.aliases @: ~module/aliases
+mod/sys.module.configs @: module/module-configs/*
+cli/sys.module.configs @: module/cli-module-configs/*

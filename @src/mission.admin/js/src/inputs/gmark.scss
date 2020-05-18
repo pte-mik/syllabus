@@ -1,0 +1,32 @@
+[is="codex-input-gmark"] {
+	textarea {
+		color: #73879C;
+		width: 100%;
+		border: 0;
+		resize: vertical;
+		padding: 10px;
+	}
+	div.add {
+		height: 6px;
+		background-color: #64b117;
+		cursor: pointer;
+		&:hover:before {
+			font-weight: bold;
+			color: white;
+			content: '+';
+			position: relative;
+			display: inline-block;
+			left: calc(50% - 10px);
+			background-color: #64b117;
+			width: 20px;
+			height: 20px;
+			line-height: 20px;
+			top: -7px;
+			text-align: center;
+			border-radius: 10px;
+		}
+		&.over{
+			background-color: magenta;
+		}
+	}
+}

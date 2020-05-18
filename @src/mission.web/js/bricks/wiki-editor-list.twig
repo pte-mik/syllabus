@@ -1,0 +1,16 @@
+{% for page in pages %}
+	<div class="{{ page.status }}">
+		<nav>
+			<i data-id="{{ page.id }}" (deactivate) class="show-in-active fa-fw fal fa-toggle-on"></i>
+			<i data-id="{{ page.id }}" (activate) class="show-in-draft fa-fw fal fa-toggle-off"></i>
+			<i data-id="{{ page.id }}" (delete) class="fal fa-trash-alt fa-fw"></i>
+			<i data-id="{{ page.id }}" (edit) class="fal fa-edit fa-fw"></i>
+		</nav>
+		<div class="title">
+			{{ page.title }}
+		</div>
+		<div class="slug">
+			@{{ page.slug }}
+		</div>
+	</div>
+{% endfor %}

@@ -1,0 +1,44 @@
+[is=blog-editor-list] {
+
+	>div{
+		padding:5px 15px;
+		&:hover{
+			background-color: #eee;
+		}
+
+		border-bottom:1px solid #ddd;
+		color:#444444;
+
+		.show-in-draft, .show-in-active{
+			display: none;
+		}
+
+		&.draft{
+			color:#999;
+		}
+		&.active	.show-in-active{ display: inline-block;}
+		&.draft	.show-in-draft{ display: inline-block;}
+
+
+
+		div.title{
+			font-weight: bold;
+			line-height: 20px;
+		}
+		div.slug{
+			font-size:12px;
+			line-height: 15px;
+		}
+		nav{
+			line-height: 35px;
+			float:right;
+			cursor: pointer;
+			color:#999;
+			:hover{
+				color:#222;
+			}
+		}
+	}
+
+
+}

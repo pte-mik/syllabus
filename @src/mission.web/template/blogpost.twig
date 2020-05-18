@@ -1,0 +1,32 @@
+{% extends('layout.twig') %}
+{% block main %}
+	<article>
+		{% if post %}
+			<h1>{{ post.title }}</h1>
+			<div is="markdown">{{ post.content }}</div>
+
+			{% if post.gallery.count %}
+				<div is="wiki-gallery" data-image="">
+					{% for image in post.gallery.all %}
+						{{ image.thumbnail.box(100,100).jpg }}|{{ image.url }}
+					{% endfor %}
+				</div>
+			{% endif %}
+
+			{% if post.files.count %}
+				<div class="files">
+					{% for file in post.files.all %}
+						<a href="{{ file.url }}">{{ file.file }}</a><br>
+					{% endfor %}
+				</div>
+			{% endif %}
+
+		{% else %}
+			<h1>404</h1>
+			<center>
+				Content not available...
+			</center>
+
+		{% endif %}
+	</article>
+{% endblock %}

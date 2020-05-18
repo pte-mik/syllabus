@@ -1,0 +1,7 @@
+login: "http://www.login.mik.test"
+app: "syllabus"
+login-page: "/login"
+success-callback: "/auth"
+success-page: "/"
+after-logout-page: "/"
+logout-page: "/logout"

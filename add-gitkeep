@@ -1,0 +1,1 @@
+find . -type f -name .gitkeep -exec git add -f {} +

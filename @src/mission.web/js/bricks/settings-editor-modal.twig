@@ -1,0 +1,35 @@
+<div class="modalify">
+
+	<header>
+		<i class="inverse fal fa-cogs"></i>
+		<label>Settings</label>
+		<nav>
+			<button (save)><i class="fal fa-save"></i></button>
+			<button (close)><i class="fal fa-times"></i></button>
+		</nav>
+	</header>
+
+	<section>
+		<label>Title <input name="title" type="text" value="{{ settings.title }}"></label>
+		<label>Footer <input name="footerText" type="text" value="{{ settings.footerText }}"></label>
+		<label>Contact <input name="footerContact" type="text" value="{{ settings.footerContact }}"></label>
+		<label>Initial content <input name="start" type="text" value="{{ settings.start }}"></label>
+		<label>Status <select name="status">
+				<option {{ settings.status == 'public' ? 'selected' : '' }}>public</option>
+				<option {{ settings.status == 'protected' ? 'selected' : '' }}>protected</option>
+				<option {{ settings.status == 'hidden' ? 'selected' : '' }}>hidden</option>
+			</select>
+		</label>
+		<label>Editors <textarea rows="5" name="editors">{{ settings.editors }}</textarea></label>
+		<label>Guests <textarea rows="5" name="guests">{{ settings.guests }}</textarea></label>
+		<label>Header Image <span is="attachment-input" data-content-type="site" data-category="headImage"></span></label>
+		<label>Title Color <input name="titleColor" type="color" value="{{ settings.titleColor }}"></label>
+		<label>Menu BgColor <input name="menuBgColor" type="color" value="{{ settings.menuBgColor }}"></label>
+		<label>Menu Color <input name="menuColor" type="color" value="{{ settings.menuColor }}"></label>
+		<label>Menu Secondary Color <input name="menuSecondaryColor" type="color" value="{{ settings.menuSecondaryColor }}"></label>
+		<label>Footer BgColor <input name="footerBgColor" type="color" value="{{ settings.footerBgColor }}"></label>
+	</section>
+
+
+
+</div>

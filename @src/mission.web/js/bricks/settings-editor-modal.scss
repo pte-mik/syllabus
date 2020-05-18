@@ -1,0 +1,53 @@
+[is=modal--settings-editor] {
+
+	> div {
+		max-width: initial !important;
+		width: 450px;
+		max-height: calc(100vh - 60px);
+	}
+
+	section>label {
+		font-size:12px;
+		display: block;
+		padding: 5px 15px;
+		border-bottom: 1px solid #eee;
+		overflow: hidden;
+		line-height: 24px;
+	}
+
+	input, select, span[is=attachment-input]{
+		display: inline-block;
+		float:right;
+		width: 300px;
+		font-size:14px;
+		margin:0;
+		line-height: 20px;
+		border: 1px solid #ccc;
+	}
+	input, select{
+		padding:2px 5px;
+		background-color: transparent;
+	}
+
+	input[type=color]{
+		padding: 0;
+		//border:0;
+	}
+	input[type="color"]::-webkit-color-swatch-wrapper {
+		padding: 0;
+	}
+	input[type="color"]::-webkit-color-swatch {
+		border: none;
+	}
+
+	textarea {
+		display: block;
+		width: 100%;
+		font-family: "Courier New";
+		border: 1px solid #ccc;
+		padding: 5px;
+		resize: none;
+		font-size: 13px;
+	}
+
+}

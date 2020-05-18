@@ -1,0 +1,31 @@
+#fpm.handler: "proxy:unix:/usr/local/var/run/php7.4-fpm.sock|fcgi://localhost/"
+#ssl.dehydrated-path: "/root/dehydrated/certs/"
+#ssl.challange: "/var/www/dehydrated"
+
+domain &: sys.domain
+path:
+  public &: path.public
+  errorlog ~path.var: error.log
+attachments &: sys.module.configs.attachment-repository
+
+php:
+  -
+    type: value
+    key: error_reporting
+    value: 2147483647
+  -
+    type: value
+    key: error_log
+    value ~path.var: error.log
+  -
+    type: flag
+    key: session.cookie_httponly
+    value: on
+  -
+    type: flag
+    key: log_errors
+    value: on
+  -
+    type: flag
+    key: display_errors
+    value: off

@@ -1,0 +1,62 @@
+[is=blog-editor-page] {
+
+	height: 100%;
+
+	header {
+		height: 50px;
+		background-color: #444444;
+		input {
+			padding: 11px;
+			color: white;
+			background-color: transparent;
+			line-height: 26px;
+			border: 0;
+			font-size: 14px;
+			font-weight: 500;
+			width: 300px;
+			border-right: 1px solid #555;
+			margin: 0;
+		}
+		.dates {
+			float: right;
+			color: white;
+			line-height: 15px;
+			padding: 10px 15px;
+			font-size: 12px;
+		}
+	}
+	div.content-editor {
+		float: left;
+		width: 50%;
+		height: calc(100% - 50px);
+		overflow: hidden;
+		textarea {
+			display: block;
+			font-family: "Courier New";
+			width: 100%;
+			border: 0;
+			background-color: #2d2a29;
+			padding: 20px;
+			color: #e9e5dd;
+			resize: none;
+			font-size: 13px;
+			font-weight: bold;
+			&.lead {
+				height: calc(30% - 1px);
+				border-bottom:1px solid #ffffff;
+			}
+			&.content {
+				height: calc(70%);
+			}
+
+		}
+
+	}
+
+	[is="markdown"] {
+		float: right;
+		width: 50%;
+		height: calc(100% - 50px);
+		overflow: scroll;
+	}
+}

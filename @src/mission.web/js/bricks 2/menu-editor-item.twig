@@ -1,0 +1,42 @@
+{% set cfg = config[item.type] %}
+<div class="dropzone" (dropzone)></div>
+
+<div draggable="true" (element) class="element">
+		<div class="menuitem">
+			<i class="icon {{ cfg.icon }}"></i>
+			{% if item.content %}
+				{{ item.content }}
+			{% elseif cfg.value %}
+				{{ item.properties[cfg.value] }}
+			{% elseif cfg.content %}
+				{{ cfg.content }}
+			{% endif %}
+
+			{% for property in cfg.properties %}
+				<input type="text" (property) data-property="{{ property }}" value="{{ item.properties[property] }}" placeholder="{{ property }}">
+			{% endfor %}
+
+
+			{% if cfg.delete %}
+				<i (delete) class="operation fad fa-trash"></i>
+			{% endif %}
+
+			{% if cfg.container %}
+				{% for type, typeconfig in config %}
+					{% if type != "root" %}
+							<i (add) data-type="{{ type }}" class="operation {{ config[type].icon }}"></i>
+					{% endif %}
+				{% endfor %}
+			{% endif %}
+		</div>
+
+	{% if cfg.container %}
+		<div class="subitems">
+			{% for subitem in item.subitems %}
+				<div (item) is="menu-editor-item">{{ subitem|json_encode }}</div>
+			{% endfor %}
+			<div class="dropzone onlyifempty" (dropzone) data-before-this="yes"></div>
+		</div>
+	{% endif %}
+
+</div>

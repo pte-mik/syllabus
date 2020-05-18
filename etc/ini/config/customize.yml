@@ -1,0 +1,4 @@
+# - Your Cli commands
+/sys.missions.cli.modules:
+  Application\CliCommand\Test:
+  Application\CliCommand\CreateAdminUser:

@@ -1,0 +1,14 @@
+pattern: ":"
+mission: Andesite\Mission\Cli\CliMission
+modules:
+  cron:
+  dump-db:
+  show-env:
+  ghost:
+  generate-codex-helper:
+  update-groups:
+  generate-constants:
+  extract-api:
+  generate-config:
+  generate-public-index:
+  slave:

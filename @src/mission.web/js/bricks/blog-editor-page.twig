@@ -1,0 +1,9 @@
+<header>
+	<input (title) value="{{ post.title }}" placeholder="title">
+	<input (published) value="{{ post.published }}" placeholder="publish date" type="datetime-local">
+</header>
+<div class="content-editor">
+	<textarea (lead-editor) class="lead">{{ post.lead }}</textarea>
+	<textarea (editor) class="content">{{ post.content }}</textarea>
+</div>
+<div is="markdown" (display)>{{ post.content }}</div>

@@ -1,0 +1,25 @@
+{% if isAuthenticated %}
+	<button (logout)>
+		<i class="fal fa-times"></i> logout
+	</button>
+	{% if isOwner %}
+		<button (settings)>
+			<i class="fal fa-cogs"></i> settings
+		</button>
+	{% endif %}
+	{% if isEditor %}
+		<button (menu-editor)>
+			<i class="fal fa-indent"></i> menu
+		</button>
+		<button (wiki-pages)>
+			<i class="fal fa-file-alt"></i> wiki
+		</button>
+		<button (blog-posts)>
+			<i class="fal fa-blog"></i> blog
+		</button>
+	{% endif %}
+{% else %}
+	<button (login)>
+		<i class="fal fa-user"></i> login
+	</button>
+{% endif %}

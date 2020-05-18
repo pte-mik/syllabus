@@ -1,0 +1,18 @@
+<div class="modalify form-modal">
+	<header>
+		<i class="inverse fas fa-question"></i>
+		<label>Choose element</label>
+	</header>
+
+	<section>
+		{% for key,command in commands %}
+			<div class="option" (option) data-command="{{ key }}">
+				<i class="fa-fw {{ command.icon }}"></i> {{ command.description }}<br>
+			</div>
+		{% endfor %}
+	</section>
+
+	<footer>
+		<button (close)>Cancel</button>
+	</footer>
+</div>

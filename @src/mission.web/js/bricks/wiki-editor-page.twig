@@ -1,0 +1,10 @@
+<header>
+	<input (title) value="{{ page.title }}" placeholder="title">
+	<input (slug) value="{{ page.slug }}" placeholder="slug">
+	<div class="dates">
+		<div> created: {{ page.created |date("Y.m.d. H:i") }}</div>
+		<div> udpated: {{ page.updated |date("Y.m.d. H:i") }}</div>
+	</div>
+</header>
+<textarea (editor)>{{ page.content }}</textarea>
+<div is="markdown" (display)>{{ page.content }}</div>

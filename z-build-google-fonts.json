@@ -1,0 +1,22 @@
+[
+	{
+		"location": "assets/~fonts/",
+		"css": "app.mission.admin/style/src/google-fonts.scss",
+		"url-font-path": "/~fonts/",
+		"fonts": {
+			"Oswald": [200, 400],
+			"Rajdhani": [300, 400, 500, 600, 700],
+			"Roboto": [300, 400, 500, 600, 700]
+		}
+	},
+	{
+		"location": "assets/~fonts/",
+		"css": "app.mission.web/style/src/misc/google-fonts.scss",
+		"url-font-path": "/~fonts/",
+		"fonts": {
+			"Oswald": [200, 400],
+			"Rajdhani": [300, 400, 500, 600, 700],
+			"Roboto": [300, 400, 500, 600, 700]
+		}
+	}
+]

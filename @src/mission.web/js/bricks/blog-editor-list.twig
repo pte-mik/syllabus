@@ -1,0 +1,16 @@
+{% for post in posts %}
+	<div class="{{ post.status }}">
+		<nav>
+			<i data-id="{{ post.id }}" (deactivate) class="show-in-active fa-fw fal fa-toggle-on"></i>
+			<i data-id="{{ post.id }}" (activate) class="show-in-draft fa-fw fal fa-toggle-off"></i>
+			<i data-id="{{ post.id }}" (delete) class="fal fa-trash-alt fa-fw"></i>
+			<i data-id="{{ post.id }}" (edit) class="fal fa-edit fa-fw"></i>
+		</nav>
+		<div class="title">
+			{{ post.title }}
+		</div>
+		<div class="slug">
+			@{{ post.id }}
+		</div>
+	</div>
+{% endfor %}

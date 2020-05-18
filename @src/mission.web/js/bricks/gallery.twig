@@ -1,0 +1,18 @@
+<div class="thumbnails">
+	{% for image in images %}
+		<div><img (thumbnail) class="inline" src="{{ image.thumbnail }}" data-index="{{ loop.index }}"></div>
+	{% endfor %}
+</div>
+
+<div (viewer) class="gallery-view">
+	{% for image in images %}
+		<div (gallery-item) class="gallery-item" data-index="{{ loop.index }}">
+			<img data-src="{{ image.url }}">
+		</div>
+	{% endfor %}
+	{% if images|length > 1 %}
+		<div (next) class="next"><i class="fas fa-chevron-right"></i></div>
+		<div (prev) class="prev"><i class="fas fa-chevron-left"></i></div>
+	{% endif %}
+	<div (close) class="close"><i class="fas fa-times"></i></div>
+</div>

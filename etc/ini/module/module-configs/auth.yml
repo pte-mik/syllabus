@@ -1,0 +1,3 @@
+auth-repository: Application\Service\Auth\AuthRepository
+authenticable: Ghost\User
+#autologin-repository: Application\Service\Auth\AutoLoginRepository

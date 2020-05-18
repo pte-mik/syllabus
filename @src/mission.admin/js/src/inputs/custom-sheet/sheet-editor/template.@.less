@@ -1,0 +1,160 @@
+@import url("/css/fontawesome.css");
+
+* {
+	box-sizing: border-box;
+	outline: none;
+}
+
+table{
+	width: 100%;
+	border-spacing: 0;
+	border-collapse: collapse;
+
+	thead td {
+		text-align: left;
+		font-weight: bold;
+		background-color: #3c3c3c;
+		color: white;
+	}
+	td{
+		border-right: 1px solid #ddd;
+		border-bottom: 1px solid #ddd;
+		font-size: 12px;
+		padding: 0 10px;
+		line-height: 22px;
+		white-space: nowrap;
+		&.nopad { padding: 0; }
+	}
+	&:last-child {
+		border-right: none;
+	}
+}
+
+table.editor {
+	tr {
+		&[role=module] td {
+			border-top: 2px solid #fa0;
+			background-color: #fe6;
+		}
+
+		&[role=skill] td {
+			border-top: 2px solid #ccc;
+			font-weight: bold;
+			background-color: #eee;
+		}
+
+		&[role=subject] {
+			&:hover td {
+				background-color: #b6f5ff;
+			}
+			&.optional {
+				color: #46a5bd;
+			}
+			&.pseudo {
+				color: #0ebd2f;
+				td{
+					background-color: rgb(209, 255, 190);
+				}
+			}
+		}
+
+		td {
+			&[data-numeric-value] {
+				text-align: right;
+				&:before {
+					content: attr(data-numeric-value);
+					font-weight: bold;
+				}
+				&[data-numeric-value] {
+					text-align: right;
+					&:before {
+						content: attr(data-numeric-value);
+						font-weight: bold;
+					}
+					&[data-numeric-value = "0"]:before {
+						color: #999;
+						font-weight: normal;
+					}
+				}
+			}
+
+			&.module-name {
+				label{color: #8a6d3b;}
+				input{background-color: #feffc3; font-weight: bold;}
+			}
+			&.pseudo-subject-name {
+				label{color: #248a10;}
+				input{background-color: #b2ff9c;}
+			}
+			&.module-name, &.pseudo-subject-name {
+				padding:0;
+				* {
+					display: inline-block;
+				}
+				label {
+					width: 30px;
+					font-weight: bold;
+					text-align: center;
+					font-size: 10px;
+				}
+				input, select {
+					width: 30%;
+					line-height: 18px;
+					padding: 0 5px;
+					border: 0;
+				}
+			}
+
+			input[name=pseudo-subject-credits]{
+				border: 0;
+				width: 20px;
+				text-align: right;
+				font-weight: bold;
+				background: none;
+				padding: 0;
+			}
+
+			i.btn {
+				transition: all .3s;
+				cursor: pointer;
+				&:hover{
+					transform: rotate(360deg);
+				}
+				&[role=add-module] {
+					color: greenyellow;
+					font-size: 12px;
+				}
+
+				&[role=add-subject] {
+					color: saddlebrown;
+					font-size: 12px;
+				}
+				&[role=delete-subject],
+				&[role=delete-module] {
+					font-size: 12px;
+					color: darkred;
+				}
+			}
+		}
+	}
+}
+
+table.summary {
+	tr.semester:hover td {
+		background-color: #b6f5ff;
+	}
+	td.semester {
+		font-weight: bold;
+	}
+	tr.section td {
+		font-weight: bold;
+		background-color: orange;
+	}
+	td {
+		text-align: center;
+		&:first-child{
+			text-align:left
+		}
+	}
+}
+

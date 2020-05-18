@@ -1,0 +1,51 @@
+> header {
+	position: relative;
+	&:hover div.admin{opacity: 1;}
+
+	background-size: cover;
+
+	div.admin{
+		opacity: 0;
+		transition: all .5s;
+		line-height: 30px;
+		padding: 0 30px;
+	}
+
+	div.title-bar {
+		.logo{
+			position: absolute;
+			top: 31px;
+			left:30px;
+			height:38px;
+			padding-right: 8px;
+			border-right: 1px solid white;
+		}
+		div.title{
+			font-size:12px;
+			position: absolute;
+			vertical-align: bottom;
+			bottom: 27px;
+			left: 128px;
+		}
+		div.url{
+			font-size:24px;
+			position: absolute;
+			vertical-align: bottom;
+			bottom: 32px;
+			left: 128px;
+			span{
+				text-transform: uppercase;
+				font-size: 36px;
+				font-weight: bold;
+				@extend .titleColor;
+			}
+		}
+		height: 100px;
+		position: absolute;
+		width: 100%;
+		background-color: rgba(0, 0, 0, .6);
+		color: white;
+		bottom:0;
+		backdrop-filter: blur(3px);
+	}
+}

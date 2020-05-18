@@ -1,0 +1,180 @@
+<table class="editor">
+	<thead>
+		<tr>
+			<td style="width: 1%"><i role="add-module" class="btn fas fa-plus-square" title="Modul hozzáadása"></i></td>
+			<td>Tárgy</td>
+			<td>Kód</td>
+			<td>Felelős</td>
+			<td style="width: 1%"><i class="fas fa-sitemap" title="Specializáció / Opcionális tárgy"></i></td>
+			<td style="width: 1%"><i class="fas fa-calendar-alt" title="Szemeszter"></i></td>
+			<td style="width: 1%"><i class="fas fa-clipboard-check" title="Számonkérés módja"></i></td>
+			<td style="width: 1%"><i class="fas fa-chalkboard-teacher" title="Előadás"></i></td>
+			<td style="width: 1%"><i class="fas fa-wrench" title="Gyakorlat"></i></td>
+			<td style="width: 1%"><i class="fas fa-flask" title="Labor"></i></td>
+			<td style="width: 1%"><i class="fas fa-industry-alt" title="Szakmai gyakorlat"></i></td>
+			<td style="width: 1%"><i class="fas fa-coins" title="Kredit"></i></td>
+		</tr>
+	</thead>
+	<tbody role="modules">
+		{% set semestersMax = options.semesters %}
+		{% for module in data.modules %}
+			{% set moduleIndex = loop.index0 %}
+			<tr data-index="{{ moduleIndex }}" role="module">
+				<td><i role="delete-module" class="btn fas fa-times-circle" title="Modul törlése"></i></td>
+				<td colspan="3" class="module-name">
+					<!--label>HU:</label--><input type="text" name="module-name-hu" value="{{ module.name_hu }}" placeholder="Megnevezés (Magyarul)">
+					<!--label>EN:</label--><input type="text" name="module-name-en" value="{{ module.name_en }}" placeholder="Megnevezés (Angolul)">
+					<select name="module-category" title="Modul kategória" role="module-type">
+						{% for moduleType in loop.parent.moduleTypes %}
+							<option value="{{ moduleType.key }}" {% if moduleType.key == module.type %}selected{% endif %}>{{ moduleType.value }}</option>
+						{% endfor %}
+					</select>
+				</td>
+				<td>
+					<input title="Specializáció" type="checkbox" role="module-specialization" {{ module.spec ? 'checked' : '' }}>
+				</td>
+				<td>
+					<i role="add-subject" class="btn fas fa-plus-square" title="Tantárgy hozáadása"></i>
+					<i role="add-pseudo-subject" class="btn far fa-plus-square" title="Pszedutó tárgy hozzáadása"></i>
+				</td>
+				<td></td>
+				<td data-numeric-value="{{ module.details.summary.lectures }}" title="Előadás"></td>
+				<td data-numeric-value="{{ module.details.summary.practices }}" title="Gyakorlat"></td>
+				<td data-numeric-value="{{ module.details.summary.labPractices }}" title="Labor"></td>
+				<td data-numeric-value="{{ module.details.summary.internship }}" title="Szakmai gyakorlat"></td>
+				<td data-numeric-value="{{ module.details.summary.credits }}" title="Kredit"></td>
+			</tr>
+			{% set skillId = 0 %}
+			{% for subject in module.subjects %}
+				{% if skillId != subject.details.skillId %}
+					<tr role="skill">
+						<td colspan="3">{{ subject.details.skill }}</td>
+						<td>{{ subject.details.skillResponsible }}</td>
+						<td colspan="8"></td>
+					</tr>
+					{% set skillId = subject.details.skillId %}
+				{% endif %}
+
+				{% if not subject.pseudo %}
+					<tr role="subject" data-module-index="{{ moduleIndex }}" data-index="{{ loop.index0 }}" class="{{ subject.optional ? 'optional' :'' }}">
+						<td><i role="delete-subject" class="btn fas fa-times-circle"></i></td>
+						<td><span>{{ subject.details.name_hu }}</span></td>
+						<td>{{ subject.details.code }}</td>
+						<td>{{ subject.details.responsible ? subject.details.responsible }} </td>
+						<td>
+							<input type="checkbox" role="subject-optional" {{ subject.optional ? 'checked' : '' }} title="Opcionális tárgy">
+						</td>
+						<td class="nopad">
+							<number-select name="subject-semester" max="{{ semestersMax }}" value="{{ subject.semester }}"></number-select>
+						</td>
+						<td>
+							{% if subject.details.examType == "sign" %}
+								<i class="far fa-file-signature" title="Aláírás"></i>
+							{% elseif subject.details.examType == "exam" %}
+								<i class="far fa-comments" title="Vizsga"></i>
+							{% elseif subject.details.examType == "midterm" %}
+								<i class="fas fa-users-class" title="Félévközi jegy"></i>
+							{% endif %}
+						</td>
+						<td data-numeric-value="{{ subject.details.lectures }}" title="Előadás"></td>
+						<td data-numeric-value="{{ subject.details.practices }}" title="Gyakorlat"></td>
+						<td data-numeric-value="{{ subject.details.labPractices }}" title="Labor"></td>
+						<td data-numeric-value="{{ subject.details.internship }}" title="Szakmai gyakorlat"></td>
+						<td data-numeric-value="{{ subject.details.credits }}" title="Kredit"></td>
+					</tr>
+				{% else %}
+					<tr role="subject" data-module-index="{{ moduleIndex }}" data-index="{{ loop.index0 }}" class="pseudo">
+						<td><i role="delete-subject" class="fas fa-times-circle"></i></td>
+						<td colspan="3" class="pseudo-subject-name">
+							<label>HU:</label><input type="text" name="pseudo-subject-name-hu" value="{{ subject.details.name_hu }}">
+							<label>EN:</label><input type="text" name="pseudo-subject-name-en" value="{{ subject.details.name_en }}">
+						</td>
+						<td></td>
+						<td class="nopad">
+							<number-select name="subject-semester" max="{{ semestersMax }}" value="{{ subject.semester }}"></number-select>
+						</td>
+						<td></td>
+						<td data-numeric-value="{{ subject.details.lectures }}" title="Előadás"></td>
+						<td data-numeric-value="{{ subject.details.practices }}" title="Gyakorlat"></td>
+						<td data-numeric-value="{{ subject.details.labPractices }}" title="Labor"></td>
+						<td data-numeric-value="{{ subject.details.internship }}" title="Szakmai gyakorlat"></td>
+						<td><input type="text" name="pseudo-subject-credits" value="{{ subject.details.credits }}" maxlength="2" title="Kredit"></td>
+					</tr>
+				{% endif %}
+			{% endfor %}
+		{% endfor %}
+	</tbody>
+</table>
+
+<table class="summary">
+	<thead>
+		<tr>
+			<td>Szemeszter</td>
+			<td style="width: 1%"><i class="fas fa-comments" title="Vizsga"></i></td>
+			<td style="width: 1%"><i class="fas fa-users-class" title="Félévközi jegy"></i></td>
+			<td style="width: 1%"><i class="fas fa-file-signature" title="Aláírás"></i></td>
+			<td style="width: 1%"><i class="fas fa-chalkboard-teacher" title="Előadás"></i></td>
+			<td style="width: 1%"><i class="fas fa-wrench" title="Gyakorlat"></i></td>
+			<td style="width: 1%"><i class="fas fa-flask" title="Labor"></i></td>
+			<td style="width: 1%"><i class="fas fa-industry-alt" title="Szakmai gyakorlat"></i></td>
+			<td style="width: 1%"><i class="fas fa-coins" title="Kredit"></i></td>
+		</tr>
+	</thead>
+	<tbody>
+		{% set sum = data.summary.general.summary %}
+		<tr class="section">
+			<td>Alapképzés</td>
+			<td>{{ sum.exams }}</td>
+			<td>{{ sum.midterms }}</td>
+			<td>{{ sum.signs }}</td>
+			<td>{{ sum.lectures }}</td>
+			<td>{{ sum.practices }}</td>
+			<td>{{ sum.labPractices }}</td>
+			<td>{{ sum.internship }}</td>
+			<td>{{ sum.credits }}</td>
+		</tr>
+
+		{% for semesterNumber, semester in data.summary.general.semesters %}
+			<tr class="semester">
+				<td class="semester">{{ semesterNumber }}</td>
+				<td>{{ semester.exams }}</td>
+				<td>{{ semester.midterms }}</td>
+				<td>{{ semester.signs }}</td>
+				<td>{{ semester.lectures }}</td>
+				<td>{{ semester.practices }}</td>
+				<td>{{ semester.labPractices }}</td>
+				<td>{{ semester.internship }}</td>
+				<td>{{ semester.credits }}</td>
+			</tr>
+		{% endfor %}
+
+		{% for module in data.summary.modules %}
+			{% set sum = module.details.summary %}
+			{% set general = loop.parent.data.summary.general.summary %}
+			<tr class="section">
+				<td>{{ module.name_hu }}</td>
+				<td>{{ sum.exams }} / {{ general.exams + sum.exams }}</td>
+				<td>{{ sum.midterms }} / {{ general.midterms + sum.midterms }}</td>
+				<td>{{ sum.signs }} / {{ general.signs + sum.signs }}</td>
+				<td>{{ sum.lectures }} / {{ general.lectures + sum.lectures }}</td>
+				<td>{{ sum.practices }} / {{ general.practices + sum.practices }}</td>
+				<td>{{ sum.labPractices }} / {{ general.labPractices + sum.labPractices }}</td>
+				<td>{{ sum.internship }} / {{ general.internship + sum.internship }}</td>
+				<td>{{ sum.credits }} / {{ general.credits + sum.credits }}</td>
+			</tr>
+			{% for semesterNumber, semester in module.details.semesterSummary %}
+				<tr class="semester">
+					<td class="semester">{{ semesterNumber }}</td>
+					<td>{{ semester.exams }}</td>
+					<td>{{ semester.midterms }}</td>
+					<td>{{ semester.signs }}</td>
+					<td>{{ semester.lectures }}</td>
+					<td>{{ semester.practices }}</td>
+					<td>{{ semester.labPractices }}</td>
+					<td>{{ semester.internship }}</td>
+					<td>{{ semester.credits }}</td>
+				</tr>
+			{% endfor %}
+		{% endfor %}
+	</tbody>
+</table>

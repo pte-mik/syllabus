@@ -1,0 +1,39 @@
+> article {
+	padding-bottom: 60px;
+
+	> h1, h1.page-title {
+		margin-top: 10px;
+		height: 90px;
+		line-height: 90px;
+		font-size: 36px;
+		margin-left: 60px;
+		margin-right: 60px;
+		font-weight: 500;
+		border-bottom: 1px solid rgba(0,0,0,.2);
+	}
+
+	.files{
+		margin:0 60px;
+		a{
+			color:#1e90ff;
+			font-weight: bold;
+			font-size:13px;
+		}
+		a:before{
+			box-sizing: border-box;
+			font-size:16px;
+			display: inline-block;
+			font-family: "Font Awesome 5 Pro";
+			content: "\f0a4";
+			font-weight: bold;
+			width: 25px;
+			padding-left:0px;
+			transition: all .3s;
+			opacity: .5;
+		}
+		a:hover:before{
+			padding-left:6px;
+			opacity: 1;
+		}
+	}
+}

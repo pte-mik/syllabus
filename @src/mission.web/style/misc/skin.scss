@@ -1,0 +1,41 @@
+$menuBgColor: #111111;
+$menuColor: #ffffff;
+$footerBgColor: #373f4a;
+$menuSecondaryColor: #ffa200;
+$titleColor: #ffa200;
+
+
+.menuBgColor {
+	background-color: $menuBgColor;
+	background-color: var(--menu-bg-color);
+}
+
+.menuColor {
+	color: $menuColor;
+	color: var(--menu-color);
+}
+
+.footerBgColor {
+	background-color: $footerBgColor;
+	background-color: var(--footer-bg-color);
+}
+
+.titleColor {
+	color: $titleColor;
+	color: var(--title-color);
+}
+
+.menuSecondaryColor {
+	color: $menuSecondaryColor;
+	color: var(--menu-secondary-color);
+}
+
+.menuSecondaryColor-bg {
+	background-color: $menuSecondaryColor;
+	background-color: var(--menu-secondary-color);
+}
+
+.menuBgColor-color {
+	color: $menuBgColor;
+	color: var(--menu-bg-color);
+}

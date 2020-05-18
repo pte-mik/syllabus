@@ -1,0 +1,47 @@
+[is="gmark-block"] {
+	div.blockname{
+		background-color: #3d414c;
+		color:white;
+		padding:5px 10px;
+		font-size:12px;
+		font-weight: bold;
+		i.control{
+			float: right;
+			margin-left: 3px;
+			cursor: pointer;
+		}
+	}
+	div.attributes{
+		background-color: #565f79;
+		color:white;
+		padding:0;
+		font-size:12px;
+		label{
+			width: 110px;
+			padding:0 10px;
+			line-height: 26px;
+			display: inline-block;
+			background-color: rgba(255,255,255,.1);
+		}
+		input, select{
+			font-weight: bold;
+			display: inline-block;
+			border:0;
+			background-color: transparent;
+			padding: 0 5px;
+			margin:0;
+			line-height: 26px;
+			color: #00ffdc;
+			width: calc(100% - 120px);
+		}
+	}
+	textarea {
+		color  : #73879C;
+		width  : 100%;
+		border : 0;
+		resize : none;
+		padding: 10px;
+		box-sizing: border-box;
+	}
+
+}
