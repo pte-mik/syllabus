@@ -7,10 +7,32 @@ import "./sheet-editor.scss";
 import {modalify}    from "zengular-ui";
 import {Brick}       from "zengular";
 import {Ajax, RJson} from "zengular-util";
+import Contextmenu   from "zengular-ui/contextmenu/contextmenu";
+import copy          from "copy-text-to-clipboard";
 
 @modalify()
 @Brick.register('sheet-editor', twig)
 export default class SheetEditor extends Brick {
+
+	onInitialize() {
+		this.menu = {};
+		this.menu.module = new Contextmenu();
+		this.menu.module.add('Új tantárgy hozzáadása', 'fad fa-plus-square').click(ctx => { console.log(ctx)});
+		this.menu.module.add('Új pszeudo tantárgy hozzáadása', 'fal fa-plus-square').click(ctx => { console.log(ctx)});
+		this.menu.module.add('Modul adatai', 'fad fa-edit').click(ctx => { console.log(ctx)});
+		this.menu.module.add('Modul törlése', 'fad fa-trash-alt').click(ctx => { console.log(ctx)});
+
+		this.menu.subject = new Contextmenu();
+		this.menu.subject.add('Új tantárgy hozzáadása', 'fad fa-plus-square').click(ctx => { console.log(ctx)});
+		this.menu.subject.add('Új pszeudo tantárgy hozzáadása', 'fal fa-plus-square').click(ctx => { console.log(ctx)});
+		this.menu.subject.add('Modul adatai', 'fad fa-edit').click(ctx => { console.log(ctx)});
+		this.menu.subject.add('Modul törlése', 'fad fa-trash').click(ctx => { console.log(ctx)});
+		this.menu.subject.add('Tantárgy törlése', 'fal fa-trash').click(ctx => { console.log(ctx)});
+
+		this.menu.pseudosubject = new Contextmenu();
+		this.menu.pseudosubject.add('Szerkesztés', 'fad fa-edit').click(ctx => { console.log(ctx)});
+		this.menu.pseudosubject.add('Törlés', 'fal fa-trash').click(ctx => { console.log(ctx)});
+	}
 
 	beforeRender(value) {
 		this.data = value;
@@ -89,6 +111,18 @@ export default class SheetEditor extends Brick {
 		this.$$('close').listen('click', () => {
 			this.fire('value-changed', {value: this.getValue()})
 			this.close();
+		});
+		this.$$('module').listen('contextmenu', (event, target) => {
+			this.menu.module.show(event, target);
+		});
+		this.$$('skill').listen('contextmenu', (event, target) => {
+			this.menu.module.show(event, target);
+		});
+		this.$$('subject').listen('contextmenu', (event, target) => {
+			this.menu.subject.show(event, target);
+		});
+		this.$$('pseudo-subject').listen('contextmenu', (event, target) => {
+			this.menu.pseudosubject.show(event, target);
 		});
 	}
 

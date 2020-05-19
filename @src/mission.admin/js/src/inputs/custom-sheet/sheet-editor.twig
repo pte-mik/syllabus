@@ -1,6 +1,5 @@
 <div class="modalify form-modal">
 	<header>
-		<i class="inverse fas fa-code"></i>
 		<label>Sheet Editor</label>
 		<nav>
 			<button (add)><i class="fas fa-plus-square"></i></button>
@@ -34,7 +33,7 @@
 			{% set db = db %}
 			{% for module in data.modules %}
 				{% set moduleIndex = loop.index0 %}
-				<tr data-index="{{ moduleIndex }}" role="module">
+				<tr (module) data-index="{{ moduleIndex }}" role="module">
 					<td colspan="6" class="module-name">
 						{{ module.name_hu }}
 {#						<!--label>HU:</label--><input type="text" name="module-name-hu" value="{{ module.name_hu }}" placeholder="Megnevezés (Magyarul)">#}
@@ -69,12 +68,12 @@
 						{% set subject = db.get.subject(subject.id) %}
 
 						{% if skillId != subject.skillId and subject.skillId %}
-							<tr role="skill">
+							<tr (skill) role="skill">
 								<td colspan="11"><b>{{ subject.skill.name_hu }}</b> ({{ subject.skill.responsible.name }})</td>
 							</tr>
 							{% set skillId = subject.skillId %}
 						{% endif %}
-						<tr role="subject" data-module-index="{{ moduleIndex }}" data-index="{{ loop.index0 }}" class="{{ subject.optional ? 'optional' :'' }}">
+						<tr (subject) role="subject" data-module-index="{{ moduleIndex }}" data-index="{{ loop.index0 }}" class="{{ subject.optional ? 'optional' :'' }}">
 							<td>{{ subject.name_hu }}</td>
 							<td class="subject-info">{{ subject.code }}</td>
 							<td class="subject-info">{{ subject.responsible.name ? subject.responsible.name }} </td>
@@ -100,14 +99,14 @@
 							<td data-numeric-value="{{ subject.credits }}" title="Kredit"></td>
 						</tr>
 					{% else %}
-						<tr role="subject" data-module-index="{{ moduleIndex }}" data-index="{{ loop.index0 }}" class="pseudo">
+						<tr (pseudo-subject) role="subject" data-module-index="{{ moduleIndex }}" data-index="{{ loop.index0 }}" class="pseudo">
 							<td colspan="3" class="pseudo-subject-name">
 								<label>HU:</label><input type="text" name="pseudo-subject-name-hu" value="{{ subject.name_hu }}">
 								<label>EN:</label><input type="text" name="pseudo-subject-name-en" value="{{ subject.name_en }}">
 							</td>
 							<td></td>
 							<td class="nopad">
-								<number-select name="subject-semester" max="{{ semestersMax }}" value="{{ subject.semester }}"></number-select>
+								<div is="number-select" name="subject-semester" data-max="{{ semestersMax }}7" data-value="{{ semester }}"></div>
 							</td>
 							<td></td>
 							<td data-numeric-value="0" title="Előadás"></td>
