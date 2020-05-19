@@ -1,7 +1,7 @@
 //import Ajax           from "phlex-ajax";
 //import SubjectChooser from "./subject-chooser";
 //import CustomElement  from "phlex-custom-element";
-//import "../number-select/number-select";
+import "./number-select/number-select.brick";
 import twig          from "./sheet-editor.twig";
 import "./sheet-editor.scss";
 import {modalify}    from "zengular-ui";
