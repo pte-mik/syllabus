@@ -65,7 +65,7 @@ abstract class CurriculumGhost extends Ghost{
 		$model->addField("name", Field::TYPE_STRING,null);
 		$model->addField("semesters", Field::TYPE_INT,null);
 		$model->addField("accepted", Field::TYPE_DATE,null);
-		$model->addField("sheet", Field::TYPE_STRING,null);
+		$model->addField("sheet", Field::TYPE_JSON,null);
 		$model->protectField("id");
 		$model->addValidator("id", new \Symfony\Component\Validator\Constraints\Type('int'));
 		$model->addValidator("id", new \Symfony\Component\Validator\Constraints\PositiveOrZero());
@@ -77,8 +77,6 @@ abstract class CurriculumGhost extends Ghost{
 		$model->addValidator("name", new \Symfony\Component\Validator\Constraints\Length(['max'=>255]));
 		$model->addValidator("semesters", new \Symfony\Component\Validator\Constraints\Type('int'));
 		$model->addValidator("accepted", new \Andesite\Ghost\Validator\Instance('Valentine\\Date'));
-		$model->addValidator("sheet", new \Symfony\Component\Validator\Constraints\Type('string'));
-		$model->addValidator("sheet", new \Symfony\Component\Validator\Constraints\Length(['max'=>65535]));
 		return $model;
 	}
 }

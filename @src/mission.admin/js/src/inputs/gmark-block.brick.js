@@ -3,7 +3,6 @@ import twig    from "./gmark-block.twig";
 import "./gmark-block.scss";
 
 @Brick.register('gmark-block', twig)
-
 export default class GMarkBlock extends Brick {
 
 	setup(data) {

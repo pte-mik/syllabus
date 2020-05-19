@@ -5,17 +5,19 @@ use Andesite\Mission\Web\Responder\ApiJsonResponder;
 use Application\Ghost\Subject;
 
 class Subjects extends ApiJsonResponder{
-	/**
-	 * @on get
-	 */
+	/** @on get */
 	function get($id){
 		$ids = explode(',',$id);
 		$subjects = Subject::collect($ids);
 		return array_map([$this, 'map'], $subjects);
 	}
-	/**
-	 * @accepts get
-	 */
+
+	/** @accepts get */
+	function all(){
+		return Subject::search()->asc(Subject::F_name_hu)->collect();
+	}
+
+	/** @accepts get */
 	function search($name){
 		$subjects = Subject::search(
 			Filter::where(Subject::f_name_en()->instring($name))

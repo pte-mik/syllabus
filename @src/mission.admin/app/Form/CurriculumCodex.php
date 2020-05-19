@@ -27,10 +27,10 @@ class CurriculumCodex extends CurriculumHelper{
 		$form->setLabelField($this->name);
 		$form->addJSPlugin('FormButtonSave', 'FormButtonDelete', 'FormButtonReload');
 
-
 		$main = $form->section('Adatok');
 		$main->input('string', $this->name);
 		$main->input('integer', $this->semesters);
+		$main->input('sheet-editor', $this->sheet);
 	}
 
 
