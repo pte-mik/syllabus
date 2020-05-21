@@ -1,6 +1,3 @@
-//import Ajax           from "phlex-ajax";
-//import SubjectChooser from "./subject-chooser";
-//import CustomElement  from "phlex-custom-element";
 import "./number-select/number-select.brick";
 import twig          from "./sheet-editor.twig";
 import "./sheet-editor.scss";
@@ -8,34 +5,43 @@ import {modalify}    from "zengular-ui";
 import {Brick}       from "zengular";
 import {Ajax, RJson} from "zengular-util";
 import Contextmenu   from "zengular-ui/contextmenu/contextmenu";
-import copy          from "copy-text-to-clipboard";
 
 @modalify()
 @Brick.register('sheet-editor', twig)
 export default class SheetEditor extends Brick {
 
 	onInitialize() {
-		this.menu = {};
-		this.menu.module = new Contextmenu();
-		this.menu.module.add('Új tantárgy hozzáadása', 'fad fa-plus-square').click(ctx => { console.log(ctx)});
-		this.menu.module.add('Új pszeudo tantárgy hozzáadása', 'fal fa-plus-square').click(ctx => { console.log(ctx)});
-		this.menu.module.add('Modul adatai', 'fad fa-edit').click(ctx => { console.log(ctx)});
-		this.menu.module.add('Modul törlése', 'fad fa-trash-alt').click(ctx => { console.log(ctx)});
-
-		this.menu.subject = new Contextmenu();
-		this.menu.subject.add('Új tantárgy hozzáadása', 'fad fa-plus-square').click(ctx => { console.log(ctx)});
-		this.menu.subject.add('Új pszeudo tantárgy hozzáadása', 'fal fa-plus-square').click(ctx => { console.log(ctx)});
-		this.menu.subject.add('Modul adatai', 'fad fa-edit').click(ctx => { console.log(ctx)});
-		this.menu.subject.add('Modul törlése', 'fad fa-trash').click(ctx => { console.log(ctx)});
-		this.menu.subject.add('Tantárgy törlése', 'fal fa-trash').click(ctx => { console.log(ctx)});
-
-		this.menu.pseudosubject = new Contextmenu();
-		this.menu.pseudosubject.add('Szerkesztés', 'fad fa-edit').click(ctx => { console.log(ctx)});
-		this.menu.pseudosubject.add('Törlés', 'fal fa-trash').click(ctx => { console.log(ctx)});
+		this.menu = new Contextmenu();
+		this.menu.add('Modul ', 'fad fa-folder').separator();
+		this.menu.add('Új modul', 'fad fa-plus-square', 'add-module').click(ctx => {
+			this.data.modules.push({name: "new module", subjects: []});
+			this.render();
+		});
+		this.menu.add('Adatok szerkesztése', 'fad fa-edit', 'edit-module').click(ctx => { console.log(ctx)});
+		this.menu.add('Törlés', 'fad fa-trash', 'delete-module').click(ctx => { console.log(ctx)});
+		this.menu.add('Tantárgy ', 'fad fa-users-class').separator();
+		this.menu.add('Új tantárgy', 'fad fa-plus-square', 'add-subject').click(ctx => { console.log(ctx)});
+		this.menu.add('Új pszeudo tantárgy', 'fal fa-plus-square', 'add-pseudo-subject').click(ctx => {
+			let moduleIndex = ctx.dataset.moduleIndex;
+			console.log(moduleIndex)
+			this.data.modules[moduleIndex].subjects.push({
+				name_hu: 'pszeudo tárgy',
+				name_en: 'pseudo subject',
+				credits: 1,
+				semester: 1,
+				pseudo: true
+			});
+			this.render();
+		});
+		this.menu.add('Adatok szerkesztése', 'fad fa-edit', 'edit-subject').click(ctx => { console.log(ctx)});
+		this.menu.add('Törlés', 'fad fa-trash', 'delete-subject').click(ctx => { console.log(ctx)});
 	}
 
-	beforeRender(value) {
-		this.data = value;
+	rerender(){
+		this.render({semeters: this.semesters, sheet: this.data});
+	}
+
+	createScema() {
 		let schema = RJson.schema();
 
 		schema.define('user', null, 'key')
@@ -75,32 +81,39 @@ export default class SheetEditor extends Brick {
 			.relation('responsible', 'user', 'responsibleId', 'subjects')
 			.relation('skill', 'skill', 'skillId', 'subjects')
 		;
-		this.db = new RJson(schema, {});
+		return schema;
+	}
+
+	beforeRender(value = null) {
+		if (value !== null) {
+			this.data = value.sheet;
+			this.semesters = value.semesters;
+			this.db = new RJson(this.createScema(), {});
+			return Promise.all([
+				Ajax.get('/api/subjects/all').getJson
+					.then(xhr => {
+						this.db.load('subject', xhr.response);
+						let userIds = [];
+						for (let i in this.db.storage.subject) {
+							userIds.push(this.db.storage.subject[i].responsibleId);
+						}
+						return [...new Set(userIds)];
+					})
+					.then(userIds => { return Ajax.get('/api/users/' + userIds.join(',')).getJson })
+					.then(xhr => { this.db.load('user', xhr.response) })
+				,
+				Ajax.get('/api/skills/all').getJson.then(xhr => { this.db.load('skill', xhr.response) }),
+				Ajax.get('/api/moduletypes/all').getJson.then(xhr => { this.db.load('moduletype', xhr.response) }),
+			]);
+		}
 	}
 
 	createViewModel() {
-		return Promise.all([
-			Ajax.get('/api/subjects/all').getJson
-				.then(xhr => {
-					this.db.load('subject', xhr.response);
-					let userIds = [];
-					for (let i in this.db.storage.subject) {
-						userIds.push(this.db.storage.subject[i].responsibleId);
-					}
-					return [...new Set(userIds)];
-				})
-				.then(userIds => { return Ajax.get('/api/users/' + userIds.join(',')).getJson })
-				.then(xhr => { this.db.load('user', xhr.response) })
-			,
-			Ajax.get('/api/skills/all').getJson.then(xhr => { this.db.load('skill', xhr.response) }),
-			Ajax.get('/api/moduletypes/all').getJson.then(xhr => { this.db.load('moduletype', xhr.response) }),
-		]).then(() => {
-			console.log(this.db)
-			return {
-				data: this.data,
-				db: this.db
-			};
-		});
+		return {
+			semesters: this.semesters,
+			data: this.data,
+			db: this.db
+		};
 	}
 
 	getValue() {
@@ -112,17 +125,30 @@ export default class SheetEditor extends Brick {
 			this.fire('value-changed', {value: this.getValue()})
 			this.close();
 		});
+		this.$$('header').listen('contextmenu', (event, target) => {
+			this.menu.show(event, target);
+			this.menu.disableAll();
+			this.menu.enable('add-module');
+		});
 		this.$$('module').listen('contextmenu', (event, target) => {
-			this.menu.module.show(event, target);
+			this.menu.show(event, target);
+			this.menu.enableAll();
+			this.menu.disable('edit-subject', 'delete-subject');
 		});
 		this.$$('skill').listen('contextmenu', (event, target) => {
-			this.menu.module.show(event, target);
+			this.menu.show(event, target);
+			this.menu.enableAll();
+			this.menu.disable('edit-subject', 'delete-subject');
+
 		});
 		this.$$('subject').listen('contextmenu', (event, target) => {
-			this.menu.subject.show(event, target);
+			this.menu.show(event, target);
+			this.menu.enableAll();
+			this.menu.disable('edit-subject');
 		});
 		this.$$('pseudo-subject').listen('contextmenu', (event, target) => {
-			this.menu.pseudosubject.show(event, target);
+			this.menu.show(event, target);
+			this.menu.enableAll();
 		});
 	}
 

@@ -21,7 +21,6 @@ class SubjectCodex extends SubjectHelper{
 	}
 
 	protected function createDataProvider(): DataProviderInterface{
-
 		$dataProvider = parent::createDataProvider();
 		$dataProvider->addFieldConverter('preconditions', function (Subject $item){ return Precondition::getPreconditionIds($item->id); });
 		return $dataProvider;

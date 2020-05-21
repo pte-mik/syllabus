@@ -35,7 +35,7 @@
 
 	table.editor {
 		tr {
-			&[role=module] td {
+			&.module td {
 				border-top: 4px solid #1c3347;
 				background-color: #47555b;
 				font-size: 10px;
@@ -44,14 +44,14 @@
 				border-right: 0;
 			}
 
-			&[role=skill] td {
+			&.skill td {
 				border-top: 2px solid #ccc;
 				background-color: #eee;
 				font-size: 10px;
 				b {color: #111;}
 			}
 
-			&[role=subject] {
+			&.subject {
 				td.subject-info{
 					font-size:11px;
 					color:#888;

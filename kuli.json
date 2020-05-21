@@ -1,0 +1,13 @@
+{
+	"ENV": {},
+	"slaves": {
+		"brick": {
+			"src": "https://raw.githubusercontent.com/laborci/slaves/master/brick",
+			"arguments": {}
+		},
+		"modal": {
+			"src": "https://raw.githubusercontent.com/laborci/slaves/master/modal",
+			"arguments": {}
+		}
+	}
+}

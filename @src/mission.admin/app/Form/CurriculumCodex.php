@@ -3,12 +3,19 @@
 use Andesite\Codex\Form\FormDecorator;
 use Andesite\Codex\Form\FormHandler\FormHandler;
 use Andesite\Codex\Form\ListHandler\ListHandler;
+use Andesite\Codex\Interfaces\DataProviderInterface;
 use Application\AdminCodex\GhostHelper\CurriculumHelper;
-use Application\AdminCodex\GhostHelper\ModuleTypeHelper;
-use Application\AdminCodex\GhostHelper\SkillHelper;
 use Application\Component\Constant\Permission\Role;
+use Application\Ghost\Curriculum;
 
 class CurriculumCodex extends CurriculumHelper{
+
+	protected function createDataProvider(): DataProviderInterface{
+		$dataProvider = parent::createDataProvider();
+		$dataProvider->addFieldConverter('sheet', function (Curriculum $item){ return ['semesters'=>$item->semesters, 'sheet'=>$item->sheet]; });
+		return $dataProvider;
+	}
+
 
 	protected function decorator(FormDecorator $decorator){
 		$decorator->setIcons('fal fa-book');
