@@ -1,18 +1,18 @@
 <div class="modalify rounded form-modal">
 
 	<header>
-		<i class="inverse fal fa-user"></i>
-		<label></label>
-		<nav>
-		</nav>
+		<i class="inverse fal fa-bars"></i>
+		<label>Modulok sorrendje</label>
+		<nav></nav>
 	</header>
 
 	<section>
-		module-order
+		{% for module in data.modules %}
+			<div (module) class="module" data-module-index="{{ loop.index0 }}" draggable="true">{{ module.name_hu }}</div>
+		{% endfor %}
 	</section>
 
 	<footer>
-		<button (no) class="primary">Cancel</button>
 		<button (ok) class="success">Ok</button>
 	</footer>
 

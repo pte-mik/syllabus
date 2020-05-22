@@ -17,8 +17,9 @@ export default class SheetEditor extends Brick {
 	onInitialize() {
 		this.menu = new Contextmenu();
 		this.menu.add('Modul ', 'fas fa-folder').separator();
-		this.menu.add('Új modul', 'fas fa-plus-square', 'add-module').click(ctx => {
-			this.data.modules.push({name_hu: "új modul", name_en: "new module", subjects: []});
+		this.menu.add('Új modul', 'fas fa-plus-square', 'add-module').click(target => {
+			let moduleIndex = typeof target.dataset.moduleIndex ? target.dataset.moduleIndex : -1;
+			this.data.modules.splice(parseInt(moduleIndex)+1, 0, {name_hu: "új modul", name_en: "new module", subjects: []});
 			this.render();
 		});
 		this.menu.add('Sorrend szerkesztése', 'fas fa-list-ol', 'reorder-modules', 'move-module').click(target => {
