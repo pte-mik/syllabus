@@ -1,0 +1,12 @@
+{
+	"arguments": {
+		"name": {},
+		"tag": {"default": "{{name}}"},
+		"class": {"default": "{{name|pascalCase}}"}
+	},
+	"templates": {
+		"brick.js.twig": "{{name}}.brick.js",
+		"scss.twig": "{{name}}.scss",
+		"twig.twig": "{{name}}.twig"
+	}
+}

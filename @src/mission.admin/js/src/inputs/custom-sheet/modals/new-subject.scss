@@ -1,0 +1,3 @@
+[is=modal--new-subject] {
+	&:not([brick-initialized="yes"]){display: none;}
+}

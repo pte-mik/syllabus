@@ -1,0 +1,16 @@
+import {modalify} from "zengular-ui";
+import {Brick} from "zengular";
+import twig    from "./{{ name }}.twig";
+import "./{{ name }}.scss";
+
+@modalify()
+@Brick.register('{{ tag }}', twig)
+export default class {{ class }} extends Brick {
+
+	onInitialize() {}
+
+	createViewModel() {}
+
+	onRender() {}
+
+}

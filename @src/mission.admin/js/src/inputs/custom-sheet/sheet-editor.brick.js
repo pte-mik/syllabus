@@ -1,10 +1,14 @@
 import "./number-select/number-select.brick";
-import twig          from "./sheet-editor.twig";
+import twig              from "./sheet-editor.twig";
 import "./sheet-editor.scss";
-import {modalify}    from "zengular-ui";
-import {Brick}       from "zengular";
-import {Ajax, RJson} from "zengular-util";
-import Contextmenu   from "zengular-ui/contextmenu/contextmenu";
+import {modalify}        from "zengular-ui";
+import {Brick}           from "zengular";
+import {Ajax, RJson}     from "zengular-util";
+import Contextmenu       from "zengular-ui/contextmenu/contextmenu";
+import SubjectProperties from "./modals/subject-properties.brick";
+import ModuleOrder       from "./modals/module-order.brick";
+import ModuleProperties  from "./modals/module-properties.brick";
+import NewSubject        from "./modals/new-subject.brick";
 
 @modalify()
 @Brick.register('sheet-editor', twig)
@@ -12,18 +16,26 @@ export default class SheetEditor extends Brick {
 
 	onInitialize() {
 		this.menu = new Contextmenu();
-		this.menu.add('Modul ', 'fad fa-folder').separator();
-		this.menu.add('Új modul', 'fad fa-plus-square', 'add-module').click(ctx => {
-			this.data.modules.push({name: "new module", subjects: []});
+		this.menu.add('Modul ', 'fas fa-folder').separator();
+		this.menu.add('Új modul', 'fas fa-plus-square', 'add-module').click(ctx => {
+			this.data.modules.push({name_hu: "új modul", name_en: "new module", subjects: []});
 			this.render();
 		});
-		this.menu.add('Adatok szerkesztése', 'fad fa-edit', 'edit-module').click(ctx => { console.log(ctx)});
-		this.menu.add('Törlés', 'fad fa-trash', 'delete-module').click(ctx => { console.log(ctx)});
+		this.menu.add('Sorrend szerkesztése', 'fas fa-list-ol', 'reorder-modules', 'move-module').click(target => {
+			ModuleOrder.modalify(this.data);
+		});
+		this.menu.add('Adatok szerkesztése', 'fad fa-edit', 'move-module').click(ctx => { console.log(ctx)});
+		this.menu.add('Törlés', 'fad fa-trash', 'delete-module').click(target => {
+			if (confirm('Biztosan törölni szeretnéd a modult?')) {
+				let moduleIndex = target.dataset.moduleIndex;
+				this.data.modules.splice(moduleIndex, 1);
+				this.render();
+			}
+		});
 		this.menu.add('Tantárgy ', 'fad fa-users-class').separator();
 		this.menu.add('Új tantárgy', 'fad fa-plus-square', 'add-subject').click(ctx => { console.log(ctx)});
-		this.menu.add('Új pszeudo tantárgy', 'fal fa-plus-square', 'add-pseudo-subject').click(ctx => {
-			let moduleIndex = ctx.dataset.moduleIndex;
-			console.log(moduleIndex)
+		this.menu.add('Új pszeudo tantárgy', 'fal fa-plus-square', 'add-pseudo-subject').click(target => {
+			let moduleIndex = target.dataset.moduleIndex;
 			this.data.modules[moduleIndex].subjects.push({
 				name_hu: 'pszeudo tárgy',
 				name_en: 'pseudo subject',
@@ -34,10 +46,17 @@ export default class SheetEditor extends Brick {
 			this.render();
 		});
 		this.menu.add('Adatok szerkesztése', 'fad fa-edit', 'edit-subject').click(ctx => { console.log(ctx)});
-		this.menu.add('Törlés', 'fad fa-trash', 'delete-subject').click(ctx => { console.log(ctx)});
+		this.menu.add('Törlés', 'fad fa-trash', 'delete-subject').click(target => {
+			if (confirm('Biztosan törölni szeretnéd a tantárgyat?')) {
+				let moduleIndex = target.dataset.moduleIndex;
+				let subjectIndex = target.dataset.index;
+				this.data.modules[moduleIndex].subjects.splice(subjectIndex, 1);
+				this.render();
+			}
+		});
 	}
 
-	rerender(){
+	rerender() {
 		this.render({semeters: this.semesters, sheet: this.data});
 	}
 
@@ -121,32 +140,32 @@ export default class SheetEditor extends Brick {
 	}
 
 	onRender() {
-		this.$$('close').listen('click', () => {
+		this.$$('close').on.mouse.click(() => {
 			this.fire('value-changed', {value: this.getValue()})
 			this.close();
 		});
-		this.$$('header').listen('contextmenu', (event, target) => {
+		this.$$('header').on.mouse.contextMenu((event, target) => {
 			this.menu.show(event, target);
 			this.menu.disableAll();
-			this.menu.enable('add-module');
+			this.menu.enable('add-module', 'reorder-modules');
 		});
-		this.$$('module').listen('contextmenu', (event, target) => {
+		this.$$('module').on.mouse.contextMenu((event, target) => {
 			this.menu.show(event, target);
 			this.menu.enableAll();
 			this.menu.disable('edit-subject', 'delete-subject');
 		});
-		this.$$('skill').listen('contextmenu', (event, target) => {
+		this.$$('skill').on.mouse.contextMenu((event, target) => {
 			this.menu.show(event, target);
 			this.menu.enableAll();
 			this.menu.disable('edit-subject', 'delete-subject');
 
 		});
-		this.$$('subject').listen('contextmenu', (event, target) => {
+		this.$$('subject').on.mouse.contextMenu((event, target) => {
 			this.menu.show(event, target);
 			this.menu.enableAll();
 			this.menu.disable('edit-subject');
 		});
-		this.$$('pseudo-subject').listen('contextmenu', (event, target) => {
+		this.$$('pseudo-subject').on.mouse.contextMenu((event, target) => {
 			this.menu.show(event, target);
 			this.menu.enableAll();
 		});
