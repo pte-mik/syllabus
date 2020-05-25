@@ -1,18 +1,29 @@
 <div class="modalify rounded form-modal">
 
 	<header>
-		<i class="inverse fal fa-user"></i>
-		<label></label>
-		<nav>
-		</nav>
+		<i class="inverse fal fa-folder"></i>
+		<label>Modul tulajdonságai</label>
+		<nav></nav>
 	</header>
 
 	<section>
-		module-properties
+		<div aria-label="Megnevezés (Magyarul)">
+			<input (name_hu) type="text" value="{{ module.name_hu }}" placeholder="Megnevezés (Magyarul)">
+		</div>
+		<div aria-label="Megnevezés (Angolul)">
+			<input (name_en) type="text" value="{{ module.name_en }}" placeholder="Megnevezés (Angolul)">
+		</div>
+		<div aria-label="Modul kategória">
+			<select (type) title="Modul kategória" role="module-type">
+				{% for moduleType in db.storage.moduletype %}
+					<option value="{{ moduleType.id }}" {% if moduleType.id == module.type %}selected{% endif %}>{{ moduleType.name }}</option>
+				{% endfor %}
+			</select>
+		</div>
 	</section>
 
 	<footer>
-		<button (no) class="primary">Cancel</button>
+		<button (cancel) class="primary">Cancel</button>
 		<button (ok) class="success">Ok</button>
 	</footer>
 

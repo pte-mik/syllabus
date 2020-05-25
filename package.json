@@ -24,10 +24,10 @@
 		"font-awesome-filetypes": "^2.1.0",
 		"markdown-it": "^10.0.0",
 		"slide-anim": "^1.3.2",
-		"zengular": "^3.0.21",
+		"zengular": "^3.0.23",
 		"zengular-codex": "^2.0.29",
 		"zengular-router": "^1.1.4",
-		"zengular-ui": "^2.0.9",
+		"zengular-ui": "^2.0.11",
 		"zengular-util": "^1.0.7"
 	},
 	"devDependencies": {

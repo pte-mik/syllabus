@@ -19,13 +19,24 @@ export default class SheetEditor extends Brick {
 		this.menu.add('Modul ', 'fas fa-folder').separator();
 		this.menu.add('Új modul', 'fas fa-plus-square', 'add-module').click(target => {
 			let moduleIndex = typeof target.dataset.moduleIndex ? target.dataset.moduleIndex : -1;
-			this.data.modules.splice(parseInt(moduleIndex)+1, 0, {name_hu: "új modul", name_en: "new module", subjects: []});
+			this.data.modules.splice(parseInt(moduleIndex) + 1, 0, {
+				name_hu: "új modul",
+				name_en: "new module",
+				subjects: []
+			});
 			this.render();
 		});
 		this.menu.add('Sorrend szerkesztése', 'fas fa-list-ol', 'reorder-modules', 'move-module').click(target => {
-			ModuleOrder.modalify(this.data);
+			ModuleOrder.modalify(this.data, (order) => {
+				let modules = [];
+				order.forEach(index => modules.push(this.data.modules[index]));
+				this.data.modules = modules;
+				this.render();
+			});
 		});
-		this.menu.add('Adatok szerkesztése', 'fad fa-edit', 'move-module').click(ctx => { console.log(ctx)});
+		this.menu.add('Adatok szerkesztése', 'fad fa-edit', 'move-module').click(target => {
+			ModuleProperties.modalify({module: this.data.modules[target.dataset.moduleIndex], db: this.db}, () => this.render())
+		});
 		this.menu.add('Törlés', 'fad fa-trash', 'delete-module').click(target => {
 			if (confirm('Biztosan törölni szeretnéd a modult?')) {
 				let moduleIndex = target.dataset.moduleIndex;
@@ -57,9 +68,7 @@ export default class SheetEditor extends Brick {
 		});
 	}
 
-	rerender() {
-		this.render({semeters: this.semesters, sheet: this.data});
-	}
+	rerender() {this.render({semeters: this.semesters, sheet: this.data});}
 
 	createScema() {
 		let schema = RJson.schema();

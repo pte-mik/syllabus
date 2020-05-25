@@ -8,7 +8,7 @@
 
 	<section>
 		{% for module in data.modules %}
-			<div (module) class="module" data-module-index="{{ loop.index0 }}" draggable="true">{{ module.name_hu }}</div>
+			<div (module) class="module" data-module-index="{{ loop.index0 }}" draggable="true"><i class="fas fa-grip-vertical"></i> {{ module.name_hu }}</div>
 		{% endfor %}
 	</section>
 
