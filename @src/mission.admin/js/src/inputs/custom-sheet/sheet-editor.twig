@@ -104,7 +104,7 @@
 						<td data-numeric-value="{{ subject.labPractices }}" title="Labor"></td>
 						<td data-numeric-value="{{ subject.internship }}" title="Szakmai gyakorlat"></td>
 						<td data-numeric-value="{{ subject.credits }}" title="Kredit"></td>
-						<td class="nopad" is="number-select" data-max="{{ semesters }}" data-value="{{ semester }}"></td>
+						<td class="nopad" (semester) is="number-select" data-max="{{ semesters }}" data-value="{{ semester }}"></td>
 						<td>
 							<div data-balloon-pos="down-right" aria-label="Opcionális tárgy">
 								<input type="checkbox" {{ subject.optional ? 'checked' : '' }}>

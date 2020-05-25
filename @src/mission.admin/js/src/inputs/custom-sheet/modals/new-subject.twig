@@ -1,14 +1,25 @@
 <div class="modalify rounded form-modal">
 
 	<header>
-		<i class="inverse fal fa-user"></i>
-		<label></label>
+		<i class="inverse fas fa-users"></i>
+		<label>Új tantárgy</label>
 		<nav>
+			<button (cancel)><i class="fas fa-times"></i></button>
 		</nav>
 	</header>
 
 	<section>
-		new-subject
+		<div aria-label="Tantárgy">
+			<select (subject-id) title="Tantárgy">
+				{% for skill in subjects %}
+					<optgroup label="{{ skill.name }}">
+					{% for subject in skill.subjects %}
+						<option value="{{ subject.id }}">{{ subject.code }} - {{ subject.name_hu }} ({{ subject.responsible.name }})</option>
+					{% endfor %}
+					</optgroup>
+				{% endfor %}
+			</select>
+		</div>
 	</section>
 
 	<footer>

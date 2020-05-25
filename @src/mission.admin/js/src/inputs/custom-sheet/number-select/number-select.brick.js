@@ -16,19 +16,14 @@ export default class extends Brick {
 		};
 	}
 
-	attachEventHandlers() {
-		this.root.querySelectorAll('b').forEach(element => {
-			element.addEventListener('click', event => {
-				this.root.querySelector('b.selected').classList.remove('selected');
-				event.target.classList.add('selected');
-				this.data.value = event.target.dataset.value;
-
-				let inputEvent = new Event('input', {
-					'bubbles': true,
-					'cancelable': true
-				});
-				this.dispatchEvent(inputEvent);
-			});
+	onRender() {
+		this.$$('select').on.click((event, target) => {
+			this.$('b.selected').each(item => item.classList.remove('selected'));
+			target.classList.add('selected');
+			if (this.data.value != target.dataset.value) {
+				this.data.value = target.dataset.value;
+				this.root.dispatchEvent(new Event('input', {'bubbles': true, 'cancelable': true}));
+			}
 		});
 	}
 

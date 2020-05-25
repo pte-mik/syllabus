@@ -1,1 +1,1 @@
-{% for i in 1..max %}<b data-value="{{ i }}" {% if loop.parent.value == i %} class="selected" {% endif %}>{{ i }}</b>{% endfor %}
+{% for i in 1..max %}<b data-value="{{ i }}" (select) {% if loop.parent.value == i %} class="selected" {% endif %}>{{ i }}</b>{% endfor %}

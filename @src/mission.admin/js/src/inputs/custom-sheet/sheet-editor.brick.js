@@ -35,7 +35,10 @@ export default class SheetEditor extends Brick {
 			});
 		});
 		this.menu.add('Adatok szerkesztése', 'fad fa-edit', 'move-module').click(target => {
-			ModuleProperties.modalify({module: this.data.modules[target.dataset.moduleIndex], db: this.db}, () => this.render())
+			ModuleProperties.modalify({
+				module: this.data.modules[target.dataset.moduleIndex],
+				db: this.db
+			}, () => this.render())
 		});
 		this.menu.add('Törlés', 'fad fa-trash', 'delete-module').click(target => {
 			if (confirm('Biztosan törölni szeretnéd a modult?')) {
@@ -44,8 +47,13 @@ export default class SheetEditor extends Brick {
 				this.render();
 			}
 		});
-		this.menu.add('Tantárgy ', 'fad fa-users-class').separator();
-		this.menu.add('Új tantárgy', 'fad fa-plus-square', 'add-subject').click(ctx => { console.log(ctx)});
+		this.menu.add('Tantárgy ', 'fad fa-users').separator();
+		this.menu.add('Új tantárgy', 'fad fa-plus-square', 'add-subject').click(target => {
+			NewSubject.modalify({
+				module: this.data.modules[target.dataset.moduleIndex],
+				db: this.db
+			}, () => this.rerender());
+		});
 		this.menu.add('Új pszeudo tantárgy', 'fal fa-plus-square', 'add-pseudo-subject').click(target => {
 			let moduleIndex = target.dataset.moduleIndex;
 			this.data.modules[moduleIndex].subjects.push({
@@ -57,7 +65,12 @@ export default class SheetEditor extends Brick {
 			});
 			this.render();
 		});
-		this.menu.add('Adatok szerkesztése', 'fad fa-edit', 'edit-subject').click(ctx => { console.log(ctx)});
+		this.menu.add('Adatok szerkesztése', 'fad fa-edit', 'edit-subject').click(target => {
+			SubjectProperties.modalify({
+				subject: this.data.modules[target.dataset.moduleIndex].subjects[target.dataset.index],
+				db: this.db
+			}, () => this.render())
+		});
 		this.menu.add('Törlés', 'fad fa-trash', 'delete-subject').click(target => {
 			if (confirm('Biztosan törölni szeretnéd a tantárgyat?')) {
 				let moduleIndex = target.dataset.moduleIndex;
@@ -68,7 +81,7 @@ export default class SheetEditor extends Brick {
 		});
 	}
 
-	rerender() {this.render({semeters: this.semesters, sheet: this.data});}
+	rerender() {this.render({semesters: this.semesters, sheet: this.data});}
 
 	createScema() {
 		let schema = RJson.schema();
@@ -138,11 +151,29 @@ export default class SheetEditor extends Brick {
 	}
 
 	createViewModel() {
+		this.reorderSubjects();
 		return {
 			semesters: this.semesters,
 			data: this.data,
 			db: this.db
 		};
+	}
+
+	reorderSubjects() {
+		this.data.modules.forEach(module => {
+			module.subjects.sort((a, b) => {
+
+				let askill = a.pseudo ? "-1" : (this.db.get.subject(a.id).skillId + '' + this.db.get.subject(a.id).skill?.name);
+				let bskill = b.pseudo ? "-1" : (this.db.get.subject(b.id).skillId + '' + this.db.get.subject(b.id).skill?.name);
+				if (askill !== bskill) return askill.localeCompare(bskill);
+
+				if (a.semester !== b.semester) return a.semester > b.semester ? 1 : -1;
+
+				let aname = a.pseudo ? a.name_hu : this.db.get.subject(a.id).name_hu + this.db.get.subject(a.id).code;
+				let bname = b.pseudo ? b.name_hu : this.db.get.subject(b.id).name_hu + this.db.get.subject(b.id).code;
+				return aname.localeCompare(bname);
+			})
+		});
 	}
 
 	getValue() {
@@ -178,6 +209,10 @@ export default class SheetEditor extends Brick {
 		this.$$('pseudo-subject').on.mouse.contextMenu((event, target) => {
 			this.menu.show(event, target);
 			this.menu.enableAll();
+		});
+		this.$$('semester').on.input((event, target)=>{
+			this.data.modules[target.parentElement.dataset.moduleIndex].subjects[target.parentElement.dataset.index].semester = target.controller.value;
+			this.render();
 		});
 	}
 

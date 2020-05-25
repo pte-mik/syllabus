@@ -1,18 +1,31 @@
 <div class="modalify rounded form-modal">
 
 	<header>
-		<i class="inverse fal fa-user"></i>
-		<label></label>
+		<i class="inverse fal fa-users"></i>
+		<label>Tantárgy adatai</label>
 		<nav>
+			<button (cancel)><i class="fas fa-times"></i></button>
 		</nav>
 	</header>
 
 	<section>
-		subject-properties
+		<div aria-label="Megnevezés (Magyarul)">
+			<input (name_hu) type="text" value="{{ subject.name_hu }}" placeholder="Megnevezés (Magyarul)">
+		</div>
+		<div aria-label="Megnevezés (Angolul)">
+			<input (name_en) type="text" value="{{ subject.name_en }}" placeholder="Megnevezés (Angolul)">
+		</div>
+		<div aria-label="Kreditek">
+			<select (credits) title="Kreditek">
+				{% for i in 1..20 %}
+					<option value="{{ i }}" {% if i == subject.credits %}selected{% endif %}>{{ i }} kredit</option>
+				{% endfor %}
+			</select>
+		</div>
 	</section>
 
 	<footer>
-		<button (no) class="primary">Cancel</button>
+		<button (cancel) class="primary">Cancel</button>
 		<button (ok) class="success">Ok</button>
 	</footer>
 

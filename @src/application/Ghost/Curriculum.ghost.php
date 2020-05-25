@@ -52,7 +52,7 @@ abstract class CurriculumGhost extends Ghost{
 	public $semesters;
 	/** @var \Valentine\Date $accepted */
 	public $accepted;
-	/** @var string $sheet */
+	/** @var array $sheet */
 	public $sheet;
 
 

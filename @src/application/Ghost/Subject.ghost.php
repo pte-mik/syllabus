@@ -152,6 +152,7 @@ abstract class SubjectGhost extends Ghost{
 		$model->addValidator("examType", new \Symfony\Component\Validator\Constraints\Choice(['exam','midterm','sign']));
 		$model->addValidator("level", new \Symfony\Component\Validator\Constraints\Type('string'));
 		$model->addValidator("level", new \Symfony\Component\Validator\Constraints\Choice(['msc','bsc','foksz']));
+		$model->addValidator("skillId", new \Symfony\Component\Validator\Constraints\NotNull());
 		$model->addValidator("skillId", new \Symfony\Component\Validator\Constraints\Type('int'));
 		$model->addValidator("skillId", new \Symfony\Component\Validator\Constraints\PositiveOrZero());
 		$model->addValidator("status", new \Symfony\Component\Validator\Constraints\Type('string'));

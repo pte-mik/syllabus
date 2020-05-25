@@ -57,7 +57,6 @@ abstract class SkillGhost extends Ghost{
 		$model->addValidator("name_hu", new \Symfony\Component\Validator\Constraints\Length(['max'=>255]));
 		$model->addValidator("name_en", new \Symfony\Component\Validator\Constraints\Type('string'));
 		$model->addValidator("name_en", new \Symfony\Component\Validator\Constraints\Length(['max'=>255]));
-		$model->addValidator("responsibleId", new \Symfony\Component\Validator\Constraints\NotNull());
 		$model->addValidator("responsibleId", new \Symfony\Component\Validator\Constraints\Type('int'));
 		$model->addValidator("responsibleId", new \Symfony\Component\Validator\Constraints\PositiveOrZero());
 		return $model;

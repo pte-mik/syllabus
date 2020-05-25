@@ -28,7 +28,7 @@
 		"zengular-codex": "^2.0.29",
 		"zengular-router": "^1.1.4",
 		"zengular-ui": "^2.0.11",
-		"zengular-util": "^1.0.7"
+		"zengular-util": "^1.0.10"
 	},
 	"devDependencies": {
 		"webpack-cli": "^3.3.11",
