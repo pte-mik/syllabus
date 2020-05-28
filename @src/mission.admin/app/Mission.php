@@ -21,7 +21,7 @@ class Mission extends CodexMission{
 
 	public function route(Router $router){
 		parent::route($router);
-		ApiManager::setup($router, '/api', __NAMESPACE__.'\\Api');
+		$router->api('/api', __NAMESPACE__.'\\Api');
 	}
 
 	public function setup($config){

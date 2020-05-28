@@ -4,7 +4,8 @@
 	"scripts": {
 		"build": "webpack --progress --colors --mode production",
 		"work": "webpack --progress --colors --watch  --mode development",
-		"ggf": "node ./node_modules/zengular-build/src/zengular-ggf.js"
+		"ggf": "node ./node_modules/zengular-build/src/zengular-ggf.js",
+		"tail": "rlogtail -p 8901"
 	},
 	"postcss": {
 		"plugins": {

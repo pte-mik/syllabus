@@ -1,0 +1,76 @@
+{% set base = summary.base %}
+
+<table class="summary">
+	<thead>
+	<tr>
+		<td>Összegzés</td>
+		<td style="width: 1%"><div data-balloon-pos="down-right" aria-label="Vizsga">V</div></td>
+		<td style="width: 1%"><div data-balloon-pos="down-right" aria-label="Félévközi jegy">F</div></td>
+		<td style="width: 1%"><div data-balloon-pos="down-right" aria-label="Aláírás">A</div></td>
+		<td style="width: 1%"><div data-balloon-pos="down-right" aria-label="Előadás"><i class="fas fa-chalkboard-teacher"></i></div></td>
+		<td style="width: 1%"><div data-balloon-pos="down-right" aria-label="Gyakorlat"><i class="fas fa-wrench"></i></div></td>
+		<td style="width: 1%"><div data-balloon-pos="down-right" aria-label="Labor"><i class="fas fa-flask"></i></div></td>
+		<td style="width: 1%"><div data-balloon-pos="down-right" aria-label="Szakmai gyakorlat"><i class="fas fa-industry-alt"></i></div></td>
+		<td style="width: 1%"><div data-balloon-pos="down-right" aria-label="Kredit"><i class="fas fa-coins"></i></div></td>
+	</tr>
+	</thead>
+	<tbody>
+	<tr class="section">
+		<td>Alapképzés</td>
+		<td>{{ summary.base.sum.exams }}</td>
+		<td>{{ summary.base.sum.midterms }}</td>
+		<td>{{ summary.base.sum.signs }}</td>
+		<td>{{ summary.base.sum.lectures }}</td>
+		<td>{{ summary.base.sum.practices }}</td>
+		<td>{{ summary.base.sum.labPractices }}</td>
+		<td>{{ summary.base.sum.internship }}</td>
+		<td>{{ summary.base.sum.credits }}</td>
+	</tr>
+
+	{% for semesterNumber, semester in summary.base.semesters %}
+		{% if semester.credits %}
+			<tr class="semester">
+				<td class="semester">{{ semesterNumber }}. szemeszter</td>
+				<td>{{ semester.exams }}</td>
+				<td>{{ semester.midterms }}</td>
+				<td>{{ semester.signs }}</td>
+				<td>{{ semester.lectures }}</td>
+				<td>{{ semester.practices }}</td>
+				<td>{{ semester.labPractices }}</td>
+				<td>{{ semester.internship }}</td>
+				<td>{{ semester.credits }}</td>
+			</tr>
+		{% endif %}
+	{% endfor %}
+
+	{% for module in summary.specs %}
+		{% set sum = module.details.summary %}
+		<tr class="section">
+			<td>{{ module.name }}</td>
+			<td>{{ module.summary.exams }} / {{ base.sum.exams + module.summary.exams }}</td>
+			<td>{{ module.summary.midterms }} / {{ base.sum.midterms + module.summary.midterms }}</td>
+			<td>{{ module.summary.signs }} / {{ base.sum.signs + module.summary.signs }}</td>
+			<td>{{ module.summary.lectures }} / {{ base.sum.lectures + module.summary.lectures }}</td>
+			<td>{{ module.summary.practices }} / {{ base.sum.practices + module.summary.practices }}</td>
+			<td>{{ module.summary.labPractices }} / {{ base.sum.labPractices + module.summary.labPractices }}</td>
+			<td>{{ module.summary.internship }} / {{ base.sum.internship + module.summary.internship }}</td>
+			<td>{{ module.summary.credits }} / {{ base.sum.credits + module.summary.credits }}</td>
+		</tr>
+		{% for semesterNumber, semester in module.semesters %}
+			{% if semester.credits %}
+				<tr class="semester">
+					<td class="semester">{{ semesterNumber }}. szemeszter</td>
+					<td>{{ semester.exams }}</td>
+					<td>{{ semester.midterms }}</td>
+					<td>{{ semester.signs }}</td>
+					<td>{{ semester.lectures }}</td>
+					<td>{{ semester.practices }}</td>
+					<td>{{ semester.labPractices }}</td>
+					<td>{{ semester.internship }}</td>
+					<td>{{ semester.credits }}</td>
+				</tr>
+			{% endif %}
+		{% endfor %}
+	{% endfor %}
+	</tbody>
+</table>

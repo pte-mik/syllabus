@@ -28,6 +28,8 @@ class ModuleTypeCodex extends ModuleTypeHelper{
 
 		$main = $form->section('Adatok');
 		$main->input('string', $this->name);
+		$main->input('string', $this->name_hu);
+		$main->input('string', $this->name_en);
 	}
 
 

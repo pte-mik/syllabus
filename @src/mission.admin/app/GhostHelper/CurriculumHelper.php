@@ -7,34 +7,29 @@ use Andesite\Codex\Interfaces\DataProviderInterface;
 
 /**
  * @label-field id: 
- * @label-field programmeId: 
- * @label-field language: 
- * @label-field language.hu: 
- * @label-field language.en: 
  * @label-field name: 
  * @label-field semesters: 
- * @label-field accepted: 
  * @label-field sheet: 
+ * @label-field level: 
+ * @label-field level.msc: 
+ * @label-field level.bsc: 
+ * @label-field level.foksz: 
  */
 abstract class CurriculumHelper extends AdminDescriptor{
 
 
 	/** @var Field */ protected $id;
-	/** @var Field */ protected $programmeId;
-	/** @var Field */ protected $language;
 	/** @var Field */ protected $name;
 	/** @var Field */ protected $semesters;
-	/** @var Field */ protected $accepted;
 	/** @var Field */ protected $sheet;
+	/** @var Field */ protected $level;
 
 	public function __construct(){
 		$this->id = new Field('id', 'id');
-		$this->programmeId = new Field('programmeId', 'programmeId');
-		$this->language = new Field('language', 'language', ['hu'=>'hu', 'en'=>'en']);
 		$this->name = new Field('name', 'name');
 		$this->semesters = new Field('semesters', 'semesters');
-		$this->accepted = new Field('accepted', 'accepted');
 		$this->sheet = new Field('sheet', 'sheet');
+		$this->level = new Field('level', 'level', ['msc'=>'msc', 'bsc'=>'bsc', 'foksz'=>'foksz']);
 	}
 
 	protected function createDataProvider(): DataProviderInterface{

@@ -48,33 +48,16 @@
 			{% set moduleIndex = loop.index0 %}
 			<tbody>
 			<tr (module) data-module-index="{{ moduleIndex }}" class="module">
-				<td colspan="4" class="module-name">
+				<td colspan="9" class="module-name">
 					<div data-balloon-pos="down-left" aria-label="{{ db.storage.moduletype[module.type].name }}">
 						<i class="fas fa-folder fa-fw"></i>
 						{{ module.name_hu }}
 					</div>
-					{#						<!--label>HU:</label--><input type="text" name="module-name-hu" value="{{ module.name_hu }}" placeholder="Megnevezés (Magyarul)">#}
-					{#						<!--label>EN:</label--><input type="text" name="module-name-en" value="{{ module.name_en }}" placeholder="Megnevezés (Angolul)">#}
-					{#						<select name="module-category" title="Modul kategória" role="module-type">#}
-					{#							{% for moduleType in db.storage.moduletype %}#}
-					{#								<option value="{{ moduleType.id }}" {% if moduleType.id == module.type %}selected{% endif %}>{{ moduleType.name }}</option>#}
-					{#							{% endfor %}#}
-					{#						</select>#}
 				</td>
-				{#					<td>#}
-				{#						<i role="add-subject" class="btn fas fa-plus-square" title="Tantárgy hozáadása"></i>#}
-				{#						<i role="add-pseudo-subject" class="btn far fa-plus-square" title="Pszedutó tárgy hozzáadása"></i>#}
-				{#					</td>#}
-				{#					<td></td>#}
-				<td data-numeric-value="{{ module.summary.lectures }}10" title="Előadás"></td>
-				<td data-numeric-value="{{ module.summary.practices }}0" title="Gyakorlat"></td>
-				<td data-numeric-value="{{ module.summary.labPractices }}10" title="Labor"></td>
-				<td data-numeric-value="{{ module.summary.internship }}0" title="Szakmai gyakorlat"></td>
-				<td data-numeric-value="{{ module.summary.credits }}0" title="Kredit"></td>
 				<td></td>
 				<td>
 					<div data-balloon-pos="down-right" aria-label="Specializáció">
-						<input type="checkbox" {{ module.spec ? 'checked' : '' }}>
+						<input type="checkbox" {{ module.spec ? 'checked' : '' }} (module-spec) data-module-index="{{ moduleIndex }}">
 					</div>
 				</td>
 			</tr>
@@ -84,7 +67,7 @@
 			{% for subject in module.subjects %}
 
 				{% set semester = subject.semester %}
-
+				{% set baseSubject = subject %}
 				{% if not subject.pseudo %}
 					{% set subject = db.get.subject(subject.id) %}
 
@@ -94,7 +77,7 @@
 						</tr>
 						{% set skillId = subject.skillId %}
 					{% endif %}
-					<tr (subject) class="subject" data-module-index="{{ moduleIndex }}" data-index="{{ loop.index0 }}" class="{{ subject.optional ? 'optional' :'' }}">
+					<tr (subject) data-module-index="{{ moduleIndex }}" data-index="{{ loop.index0 }}" class="subject {{ subject.optional ? 'optional' :'' }}">
 						<td>{{ subject.name_hu }}</td>
 						<td class="subject-info">{{ subject.code }}</td>
 						<td class="subject-info">{{ subject.responsible.name ? subject.responsible.name }} </td>
@@ -107,20 +90,15 @@
 						<td class="nopad" (semester) is="number-select" data-max="{{ semesters }}" data-value="{{ semester }}"></td>
 						<td>
 							<div data-balloon-pos="down-right" aria-label="Opcionális tárgy">
-								<input type="checkbox" {{ subject.optional ? 'checked' : '' }}>
+								<input type="checkbox" {{ baseSubject.optional ? 'checked' : '' }} (subject-optional) data-module-index="{{ moduleIndex }}" data-index="{{ loop.index0 }}">
 							</div>
 						</td>
 					</tr>
 				{% else %}
 					<tr (pseudo-subject) data-module-index="{{ moduleIndex }}" data-index="{{ loop.index0 }}" class="pseudo subject">
-						<td colspan="8" class="pseudo-subject-name">
-							{{ subject.name_hu }}
-							{#								<label>HU:</label><input type="text" name="pseudo-subject-name-hu" value="{{ subject.name_hu }}">#}
-							{#								<label>EN:</label><input type="text" name="pseudo-subject-name-en" value="{{ subject.name_en }}">#}
+						<td colspan="8" class="pseudo-subject-name">{{ subject.name_hu }}</td>
 						<td data-numeric-value="{{ subject.credits }}" title="Kredit"></td>
-						<td class="nopad">
-							<div is="number-select" name="subject-semester" data-max="{{ semesters }}" data-value="{{ semester }}"></div>
-						</td>
+						<td class="nopad" (semester) is="number-select" name="subject-semester" data-max="{{ semesters }}" data-value="{{ semester }}"></td>
 						<td><input type="checkbox" disabled></td>
 					</tr>
 				{% endif %}
@@ -128,6 +106,8 @@
 			{% endfor %}
 			</tbody>
 		</table>
+
+		<div is="sheet-summary" (summary)></div>
 
 
 		{#		<table class="summary">#}

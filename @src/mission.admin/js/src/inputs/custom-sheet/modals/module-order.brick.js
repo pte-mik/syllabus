@@ -29,6 +29,8 @@ export default class ModuleOrder extends Brick {
 	}
 
 	onRender() {
+		this.$$('cancel').on.mouse.click(() => this.close(false));
+
 		this.$$('ok').on.mouse.click(() => this.close(this.getValue()));
 		new DragAndDrop(this.$$('module'), this.$$('module'), 'over').on.drop((item, target) => target.after(item));
 	}

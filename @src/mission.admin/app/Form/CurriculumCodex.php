@@ -28,6 +28,7 @@ class CurriculumCodex extends CurriculumHelper{
 		$list->add($this->id)->visible(false);
 		$list->add($this->name);
 		$list->add($this->semesters);
+		$list->add($this->level);
 	}
 
 	protected function formHandler(FormHandler $form){
@@ -37,6 +38,7 @@ class CurriculumCodex extends CurriculumHelper{
 		$main = $form->section('Adatok');
 		$main->input('string', $this->name);
 		$main->input('integer', $this->semesters);
+		$main->input('select', $this->level)('options', $this->level->options);
 		$main->input('sheet-editor', $this->sheet);
 	}
 

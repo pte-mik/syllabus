@@ -1,0 +1,3 @@
+[is=sheet-summary] {
+	&:not([brick-initialized="yes"]){display: none;}
+}

@@ -22,11 +22,8 @@ abstract class SubjectGhost extends Ghost{
 		public static function f_id(){return new Comparison('id');}
 		public static function f_name_hu(){return new Comparison('name_hu');}
 		public static function f_name_en(){return new Comparison('name_en');}
-		public static function f_description_hu(){return new Comparison('description_hu');}
-		public static function f_description_en(){return new Comparison('description_en');}
 		public static function f_credits(){return new Comparison('credits');}
 		public static function f_code(){return new Comparison('code');}
-		public static function f_mandatory(){return new Comparison('mandatory');}
 		public static function f_lectures(){return new Comparison('lectures');}
 		public static function f_labPractices(){return new Comparison('labPractices');}
 		public static function f_practices(){return new Comparison('practices');}
@@ -36,6 +33,8 @@ abstract class SubjectGhost extends Ghost{
 		public static function f_skillId(){return new Comparison('skillId');}
 		public static function f_status(){return new Comparison('status');}
 		public static function f_responsibleId(){return new Comparison('responsibleId');}
+		public static function f_description_en(){return new Comparison('description_en');}
+		public static function f_description_hu(){return new Comparison('description_hu');}
 
 	const V_examType_exam = "exam";
 	const V_examType_midterm = "midterm";
@@ -50,11 +49,8 @@ abstract class SubjectGhost extends Ghost{
 	const F_id = "id";
 	const F_name_hu = "name_hu";
 	const F_name_en = "name_en";
-	const F_description_hu = "description_hu";
-	const F_description_en = "description_en";
 	const F_credits = "credits";
 	const F_code = "code";
-	const F_mandatory = "mandatory";
 	const F_lectures = "lectures";
 	const F_labPractices = "labPractices";
 	const F_practices = "practices";
@@ -64,6 +60,8 @@ abstract class SubjectGhost extends Ghost{
 	const F_skillId = "skillId";
 	const F_status = "status";
 	const F_responsibleId = "responsibleId";
+	const F_description_en = "description_en";
+	const F_description_hu = "description_hu";
 
 
 
@@ -73,16 +71,10 @@ abstract class SubjectGhost extends Ghost{
 	public $name_hu;
 	/** @var string $name_en */
 	public $name_en;
-	/** @var string $description_hu */
-	public $description_hu;
-	/** @var string $description_en */
-	public $description_en;
 	/** @var int $credits */
 	public $credits;
 	/** @var string $code */
 	public $code;
-	/** @var int $mandatory */
-	public $mandatory;
 	/** @var int $lectures */
 	public $lectures;
 	/** @var int $labPractices */
@@ -101,6 +93,10 @@ abstract class SubjectGhost extends Ghost{
 	public $status;
 	/** @var int $responsibleId */
 	public $responsibleId;
+	/** @var string $description_en */
+	public $description_en;
+	/** @var string $description_hu */
+	public $description_hu;
 
 
 
@@ -109,11 +105,8 @@ abstract class SubjectGhost extends Ghost{
 		$model->addField("id", Field::TYPE_ID,null);
 		$model->addField("name_hu", Field::TYPE_STRING,null);
 		$model->addField("name_en", Field::TYPE_STRING,null);
-		$model->addField("description_hu", Field::TYPE_STRING,null);
-		$model->addField("description_en", Field::TYPE_STRING,null);
 		$model->addField("credits", Field::TYPE_INT,null);
 		$model->addField("code", Field::TYPE_STRING,null);
-		$model->addField("mandatory", Field::TYPE_INT,null);
 		$model->addField("lectures", Field::TYPE_INT,null);
 		$model->addField("labPractices", Field::TYPE_INT,null);
 		$model->addField("practices", Field::TYPE_INT,null);
@@ -123,6 +116,8 @@ abstract class SubjectGhost extends Ghost{
 		$model->addField("skillId", Field::TYPE_ID,null);
 		$model->addField("status", Field::TYPE_ENUM,['draft','live','deleted']);
 		$model->addField("responsibleId", Field::TYPE_ID,null);
+		$model->addField("description_en", Field::TYPE_STRING,null);
+		$model->addField("description_hu", Field::TYPE_STRING,null);
 		$model->protectField("id");
 		$model->addValidator("id", new \Symfony\Component\Validator\Constraints\Type('int'));
 		$model->addValidator("id", new \Symfony\Component\Validator\Constraints\PositiveOrZero());
@@ -130,16 +125,10 @@ abstract class SubjectGhost extends Ghost{
 		$model->addValidator("name_hu", new \Symfony\Component\Validator\Constraints\Length(['max'=>255]));
 		$model->addValidator("name_en", new \Symfony\Component\Validator\Constraints\Type('string'));
 		$model->addValidator("name_en", new \Symfony\Component\Validator\Constraints\Length(['max'=>255]));
-		$model->addValidator("description_hu", new \Symfony\Component\Validator\Constraints\Type('string'));
-		$model->addValidator("description_hu", new \Symfony\Component\Validator\Constraints\Length(['max'=>65535]));
-		$model->addValidator("description_en", new \Symfony\Component\Validator\Constraints\Type('string'));
-		$model->addValidator("description_en", new \Symfony\Component\Validator\Constraints\Length(['max'=>65535]));
 		$model->addValidator("credits", new \Symfony\Component\Validator\Constraints\Type('int'));
 		$model->addValidator("credits", new \Symfony\Component\Validator\Constraints\PositiveOrZero());
 		$model->addValidator("code", new \Symfony\Component\Validator\Constraints\Type('string'));
 		$model->addValidator("code", new \Symfony\Component\Validator\Constraints\Length(['max'=>255]));
-		$model->addValidator("mandatory", new \Symfony\Component\Validator\Constraints\Type('int'));
-		$model->addValidator("mandatory", new \Symfony\Component\Validator\Constraints\PositiveOrZero());
 		$model->addValidator("lectures", new \Symfony\Component\Validator\Constraints\Type('int'));
 		$model->addValidator("lectures", new \Symfony\Component\Validator\Constraints\PositiveOrZero());
 		$model->addValidator("labPractices", new \Symfony\Component\Validator\Constraints\Type('int'));
@@ -159,6 +148,10 @@ abstract class SubjectGhost extends Ghost{
 		$model->addValidator("status", new \Symfony\Component\Validator\Constraints\Choice(['draft','live','deleted']));
 		$model->addValidator("responsibleId", new \Symfony\Component\Validator\Constraints\Type('int'));
 		$model->addValidator("responsibleId", new \Symfony\Component\Validator\Constraints\PositiveOrZero());
+		$model->addValidator("description_en", new \Symfony\Component\Validator\Constraints\Type('string'));
+		$model->addValidator("description_en", new \Symfony\Component\Validator\Constraints\Length(['max'=>65535]));
+		$model->addValidator("description_hu", new \Symfony\Component\Validator\Constraints\Type('string'));
+		$model->addValidator("description_hu", new \Symfony\Component\Validator\Constraints\Length(['max'=>65535]));
 		return $model;
 	}
 }

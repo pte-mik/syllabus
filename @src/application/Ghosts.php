@@ -10,7 +10,7 @@ use Andesite\Ghost\Decorator;
  * @ghost Subject
  */
 class Ghosts{
-//	public function site(Decorator $decorator){
+	//	public function site(Decorator $decorator){
 //		$decorator->hasAttachment('headImage')->maxFileCount(1)->acceptExtensions('png', 'jpg');
 //	}
 //
