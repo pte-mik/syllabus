@@ -5,7 +5,7 @@ use Andesite\Mission\Web\Responder\ApiJsonResponder;
 use Application\Ghost\ModuleType;
 use Application\Ghost\Subject;
 
-class ModuleTypes extends ApiJsonResponder{
+class  ModuleTypes extends ApiJsonResponder{
 	/** @on get */
 	function get($id){
 		$ids = explode(',',$id);
