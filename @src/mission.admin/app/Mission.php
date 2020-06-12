@@ -21,11 +21,12 @@ class Mission extends CodexMission{
 
 	public function route(Router $router){
 		parent::route($router);
-		$router->api('/api', __NAMESPACE__.'\\Api');
+		ApiManager::setup($router, '/api', __NAMESPACE__ . '\\Api');
 	}
 
 	public function setup($config){
 		parent::setup($config);
+		$this->title = "MIK Syllabus";
 		ServiceContainer::shared(AuthServiceInterface::class, AuthService::class);
 		ServiceContainer::shared(CodexWhoAmIInterface::class, CodexWhoAmI::class);
 	}

@@ -12,6 +12,7 @@ class Users extends ApiJsonResponder{
 	 * @on get
 	 */
 	function get($id){
+		dump('itt');
 		$ids = explode(',', $id);
 		$users = MikAuth::Module()->collect(...$ids);
 		return array_map([$this, 'map'], $users);

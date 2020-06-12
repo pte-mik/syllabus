@@ -15,9 +15,9 @@
 			color: white;
 			position: sticky;
 			top: 0;
+			z-index: 1;
 			border-right: 1px solid #555;
 			border-bottom: 0;
-			z-index: 1;
 		}
 		td {
 			border-right: 1px solid #ddd;
@@ -43,6 +43,9 @@
 				font-weight: 700;
 				color: white;
 				border-right: 0;
+				position: sticky;
+				top: 28px;
+				z-index: 1;
 			}
 
 			&.skill td {
@@ -94,6 +97,7 @@
 				&.module-name {
 					label {color: #8a6d3b;}
 					input {background-color: #feffc3; font-weight: bold;}
+
 				}
 				&.pseudo-subject-name {
 					label {color: #248a10;}
