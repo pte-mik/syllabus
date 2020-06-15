@@ -26,6 +26,7 @@ class Mission extends CodexMission{
 
 	public function setup($config){
 		parent::setup($config);
+		dump('IT');
 		$this->title = "MIK Syllabus";
 		ServiceContainer::shared(AuthServiceInterface::class, AuthService::class);
 		ServiceContainer::shared(CodexWhoAmIInterface::class, CodexWhoAmI::class);
