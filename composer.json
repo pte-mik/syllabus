@@ -16,7 +16,7 @@
 		"ext-simplexml": "*",
 		"erusev/parsedown": "^1.7",
 		"badcow/lorem-ipsum": "^1.1",
-		"andesite/core": "1.0.39",
+		"andesite/core": "1.0.*",
 		"symfony/validator": "^5.0"
 	},
 	"autoload": {
@@ -26,5 +26,8 @@
 			"Application\\Mission\\Web\\": "@src/mission.web/app",
 			"Application\\CliCommand\\": "@src/cli"
 		}
+	},
+	"extra": {
+		"andesite-boot": "@src/index.php"
 	}
 }

@@ -1,1 +1,3 @@
-remote-log-host: 127.0.0.1:8881
+remote-log-type: socket
+#remote-log: 127.0.0.1:8901
+remote-log ~root: rlogtail.sock
