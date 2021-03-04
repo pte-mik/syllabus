@@ -57,8 +57,8 @@ class SubjectCodex extends SubjectHelper{
 		$main = $form->section('Adatok');
 		$main->input('integer', $this->credits);
 		$main->input('integer', $this->lectures);
-		$main->input('integer', $this->labPractices);
 		$main->input('integer', $this->practices);
+		$main->input('integer', $this->labPractices);
 		$main->input('integer', $this->internship);
 		$main->input('select', $this->examType)('options', $this->examType->options);
 
