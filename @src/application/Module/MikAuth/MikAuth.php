@@ -9,6 +9,16 @@ class MikAuth extends Module{
 	private $config;
 	private $params = [];
 
+
+	protected function fetch($url){
+		return file_get_contents($url, false, stream_context_create([
+			'ssl'  => [
+				'verify_peer'      => false,
+				'verify_peer_name' => false,
+			]
+		]));
+	}
+
 	public function setup($config){
 		$this->config = $config;
 	}
@@ -39,7 +49,7 @@ class MikAuth extends Module{
 	 * @return \Application\Module\MikAuth\MikUser|null
 	 */
 	public function fetchUser($token){
-		$data = json_decode(file_get_contents($this->config['login'] . '/api/auth/fetch/' . $token), true);
+		$data = json_decode($this->fetch($this->config['login'] . '/api/auth/fetch/' . $token), true);
 		return $data ? new MikUser($data) : null;
 	}
 
@@ -48,7 +58,7 @@ class MikAuth extends Module{
 	 * @return \Application\Module\MikAuth\MikUser[]
 	 */
 	public function search($keyword){
-		return array_map(function ($data){ return new MikUser($data); }, json_decode(file_get_contents($this->config['login'] . '/api/user/search/' . $keyword), true));
+		return array_map(function ($data){ return new MikUser($data); }, json_decode($this->fetch($this->config['login'] . '/api/user/search/' . $keyword), true));
 	}
 
 	/**
@@ -56,7 +66,7 @@ class MikAuth extends Module{
 	 * @return \Application\Module\MikAuth\MikUser|null
 	 */
 	public function pick($id){
-		$data = json_decode(file_get_contents($this->config['login'] . '/api/user/' . $id), true);
+		$data = json_decode($this->fetch($this->config['login'] . '/api/user/' . $id), true);
 		return $data ? new MikUser($data) : null;
 	}
 
@@ -65,7 +75,7 @@ class MikAuth extends Module{
 	 * @return \Application\Module\MikAuth\MikUser[]
 	 */
 	public function collect(...$ids){
-		return array_map(function ($data){ return new MikUser($data); }, json_decode(file_get_contents($this->config['login'] . '/api/user/collect/' . join(',', $ids)),true));
+		return array_map(function ($data){ return new MikUser($data); }, json_decode($this->fetch($this->config['login'] . '/api/user/collect/' . join(',', $ids)),true));
 	}
 
 	/**
@@ -73,14 +83,14 @@ class MikAuth extends Module{
 	 * @return mixed
 	 */
 	public function getUserPermissions($userId){
-		return json_decode(file_get_contents($this->config['login'] . '/api/user/permissions/' . $this->config['app'].'/'.$userId), true);
+		return json_decode($this->fetch($this->config['login'] . '/api/user/permissions/' . $this->config['app'].'/'.$userId), true);
 	}
 
 	/**
 	 * @return mixed
 	 */
 	public function getAppPermissions(){
-		return json_decode(file_get_contents($this->config['login'] . '/api/permissions/' . $this->config['app']), true);
+		return json_decode($this->fetch($this->config['login'] . '/api/permissions/' . $this->config['app']), true);
 	}
 
 	/**
@@ -89,7 +99,7 @@ class MikAuth extends Module{
 	 */
 	public function login($login, $password){
 		try{
-			$result = file_get_contents($this->config['login'] . '/api/auth/login/?app='.$this->config['app'].'&login='.$login.'&password='.$password);
+			$result = $this->fetch($this->config['login'] . '/api/auth/login/?app='.$this->config['app'].'&login='.$login.'&password='.$password);
 		}catch (\Throwable $exception){
 			return null;
 		}

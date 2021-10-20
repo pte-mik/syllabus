@@ -28,9 +28,12 @@ class SubjectCodex extends SubjectHelper{
 
 	protected function listHandler(ListHandler $list){
 		$list->addJSPlugin('ListButtonAddNew');
-		$list->add($this->id)->visible(false);
-		$list->add($this->name_hu);
+		$list->add($this->id)->visible(true);
+$list->add($this->code);
+		
+$list->add($this->name_hu);
 		$list->add($this->name_en);
+		
 	}
 
 	protected function formHandler(FormHandler $form){

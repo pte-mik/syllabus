@@ -1,4 +1,4 @@
-login: "http://www.login.mik.test"
+login: "http://login.mik.localhost"
 app: "syllabus"
 login-page: "/login"
 success-callback: "/auth"

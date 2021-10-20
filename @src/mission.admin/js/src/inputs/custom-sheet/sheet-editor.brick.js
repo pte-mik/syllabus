@@ -134,10 +134,15 @@ export default class SheetEditor extends Brick {
 			this.semesters = value.semesters;
 			this.db = new RJson(this.createScema(), {});
 			return Promise.all([
-				Ajax.get('/api/subjects/all').getJson
+				Ajax.get('/api/skills/all').getJson.then(xhr=>{
+				    this.db.load('skill', xhr.response);
+				
+				return Ajax.get('/api/subjects/all').getJson
 					.then(xhr => {
 						this.db.load('subject', xhr.response);
 						let userIds = [];
+						for (let i in this.db.storage.skill) userIds.push(this.db.storage.skill[i].responsibleId);
+						console.log(userIds)
 						for (let i in this.db.storage.subject) {
 							userIds.push(this.db.storage.subject[i].responsibleId);
 						}
@@ -145,8 +150,8 @@ export default class SheetEditor extends Brick {
 					})
 					.then(userIds => { return Ajax.get('/api/users/' + userIds.join(',')).getJson })
 					.then(xhr => { this.db.load('user', xhr.response) })
-				,
-				Ajax.get('/api/skills/all').getJson.then(xhr => { this.db.load('skill', xhr.response) }),
+				}),
+				//Ajax.get('/api/skills/all').getJson.then(xhr => { this.db.load('skill', xhr.response) }),
 				Ajax.get('/api/moduletypes/all').getJson.then(xhr => { this.db.load('moduletype', xhr.response) }),
 			]);
 		}
