@@ -30,7 +30,7 @@
 		"balloon-css": "^1.0.4",
 		"copy-text-to-clipboard": "^2.2.0",
 		"font-awesome-filetypes": "^2.1.0",
-		"markdown-it": "^10.0.0",
+		"markdown-it": "^12.3.2",
 		"slide-anim": "^1.3.2",
 		"zengular": "^3.0.23",
 		"zengular-codex": "^2.0.29",
