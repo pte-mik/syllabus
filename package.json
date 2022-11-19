@@ -39,7 +39,7 @@
 		"zengular-util": "^1.0.10"
 	},
 	"devDependencies": {
-		"webpack-cli": "^3.3.11",
+		"webpack-cli": "^3.3.12",
 		"zengular-build": "^3.1.6"
 	}
 }
